@@ -56,7 +56,7 @@ export default function AlertScreen({ navigation, route }: AlertProps) {
     },
     title: {
       fontSize: 16,
-      fontFamily: 'Raleway_700Bold',
+      fontFamily: 'Inter_700Bold',
       color: colorsStyle.greys[0],
       textAlign: 'center',
     },

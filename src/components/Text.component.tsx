@@ -14,7 +14,7 @@ const Text = (props: TextProps) => {
       fontSize: 12,
       color: colorsStyle.absolutes.black,
       textAlign: 'center',
-      fontFamily: 'HindSiliguri_400Regular',
+      fontFamily: 'Inter_400Regular',
     },
   });
 

@@ -5,12 +5,16 @@ import { View, StyleSheet } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   useFonts,
-  HindSiliguri_300Light,
-  HindSiliguri_400Regular,
-  HindSiliguri_500Medium,
-  HindSiliguri_600SemiBold,
-  HindSiliguri_700Bold,
-} from '@expo-google-fonts/hind-siliguri';
+  Inter_100Thin,
+  Inter_200ExtraLight,
+  Inter_300Light,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+  Inter_800ExtraBold,
+  Inter_900Black,
+} from '@expo-google-fonts/inter';
 // import { Asset } from 'expo-asset';
 
 import colorsStyle from './src/styles/colors.style';
@@ -18,11 +22,15 @@ import Navigation from './src/routes';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
-    HindSiliguri_300Light,
-    HindSiliguri_400Regular,
-    HindSiliguri_500Medium,
-    HindSiliguri_600SemiBold,
-    HindSiliguri_700Bold,
+    Inter_100Thin,
+    Inter_200ExtraLight,
+    Inter_300Light,
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    Inter_800ExtraBold,
+    Inter_900Black,
   });
 
   let [appReady, setAppReady] = useState(false);
