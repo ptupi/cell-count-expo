@@ -8,9 +8,6 @@
 [![TYPESCRIPT](https://img.shields.io/badge/typescript-informational)](https://docs.expo.dev/guides/typescript/)  
 [![NAVIGATION](https://img.shields.io/badge/react--navigation@^6.0.12-critical)](https://reactnavigation.org/docs/getting-started)
 
-<!-- [![REDUX](https://img.shields.io/badge/tech-redux@^4.1.2-critical)](https://redux.js.org/introduction/getting-started) -->
-<!-- [![AXIOS](https://img.shields.io/badge/axios@^0.24.0-critical)](https://axios-http.com/docs/intro) -->
-
 ## Build
 
 ```bash
