@@ -1,6 +1,6 @@
 # App CellCounter
 
-[![FIGMA](https://img.shields.io/badge/design-figma-blueviolet)](https://www.figma.com/file/6JO6V2g5uigFObksan50jT/mappeAPPS?node-id=2021%3A2573&t=aJiRHxMVJEwugsk5-0)
+[![FIGMA](https://img.shields.io/badge/design-figma-blueviolet)](https://www.figma.com/file/6JO6V2g5uigFObksan50jT/mappeAPPS?node-id=2021%3A2573&t=HzLSvdigB6NHD7ej-0)
 [![ANDROID](https://img.shields.io/badge/platform-android-green)](https://play.google.com/console/u/0/developers)
 [![IOS](https://img.shields.io/badge/ios-lightgrey)](https://developer.apple.com/account)  
 [![REACTNATIVE](https://img.shields.io/badge/project-react--native@0.70.5-blue)](https://reactnative.dev/docs/getting-started)

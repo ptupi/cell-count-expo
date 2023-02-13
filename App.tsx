@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Platform, StatusBar as StatusBarReactNative } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   useFonts,
@@ -56,11 +56,19 @@ export default function App() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colorsStyle.secondaries[0],
+      backgroundColor: colorsStyle.absolutes.white,
+    },
+    containerIos: {
+      height: 44,
+      width: '100%',
+      backgroundColor: colorsStyle.absolutes.white,
+    },
+    containerAndroid: {
+      marginTop: StatusBarReactNative.currentHeight,
     },
     splashContainer: {
       flex: 1,
-      backgroundColor: colorsStyle.secondaries[0],
+      backgroundColor: colorsStyle.absolutes.white,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -68,9 +76,9 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <StatusBar style="light" backgroundColor={colorsStyle.greys[0]} />
+      <StatusBar style="dark" backgroundColor={colorsStyle.absolutes.white} />
       {appReady ? (
-        <View style={styles.container}>
+        <View style={[styles.container, Platform.OS === 'ios' ? styles.containerIos : styles.containerAndroid]}>
           <Navigation />
         </View>
       ) : (

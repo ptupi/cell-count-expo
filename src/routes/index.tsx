@@ -7,7 +7,6 @@ import {
 
 import { RootStackParamList } from './types.route';
 import MainScreen from '../screens/Main.screen';
-import AlertScreen from '../screens/Alert.screen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -22,14 +21,6 @@ function RootNavigator() {
         component={MainScreen}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
-        }}
-      />
-      <Stack.Screen
-        name="Alert"
-        component={AlertScreen}
-        options={{
-          ...TransitionPresets.ModalFadeTransition,
-          presentation: 'transparentModal',
         }}
       />
     </Stack.Navigator>

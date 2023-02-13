@@ -2,10 +2,10 @@ import { LanguageType } from './types.language';
 
 export const ptBR: LanguageType = {
   main: {
-    title: 'MAIN',
-  },
-  alert: {
-    done: 'Fechar',
+    title: 'Olá',
+    subtitle: 'O que você procura hoje?',
+    data: 'Selecione uma das opções abaixo:',
+    cellCount: 'Contagem de Células',
   },
 };
 

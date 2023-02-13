@@ -1,12 +1,10 @@
 type MainType = {
   title: string;
-};
-
-type AlertType = {
-  done: string;
+  subtitle: string;
+  data: string;
+  cellCount: string;
 };
 
 export type LanguageType = {
   main: MainType;
-  alert: AlertType;
 };
