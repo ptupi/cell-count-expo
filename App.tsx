@@ -1,7 +1,12 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, StyleSheet, Platform, StatusBar as StatusBarReactNative } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Platform,
+  StatusBar as StatusBarReactNative,
+} from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   useFonts,
@@ -78,7 +83,14 @@ export default function App() {
     <SafeAreaProvider>
       <StatusBar style="dark" backgroundColor={colorsStyle.absolutes.white} />
       {appReady ? (
-        <View style={[styles.container, Platform.OS === 'ios' ? styles.containerIos : styles.containerAndroid]}>
+        <View
+          style={[
+            styles.container,
+            Platform.OS === 'ios'
+              ? styles.containerIos
+              : styles.containerAndroid,
+          ]}
+        >
           <Navigation />
         </View>
       ) : (
