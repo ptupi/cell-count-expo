@@ -1,5 +1,5 @@
 import React from 'react';
-import { BackHandler, StyleSheet, View } from 'react-native';
+import { BackHandler, FlatList, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -10,12 +10,30 @@ import { RootStackParamList } from '../routes/types.route';
 import colorsStyle from '../styles/colors.style';
 import Text, { Fonts } from '../components/Text.component';
 import Pressable from '../components/Pressable.component';
+import MainOption, {
+  MainOptionProps,
+} from '../components/MainOption.component';
 
 type MainNavigationProp = StackNavigationProp<RootStackParamList, 'Main'>;
 type MainProps = { navigation: MainNavigationProp };
 
 export default function MainScreen({ navigation }: MainProps) {
   const { main } = language;
+
+  const FEATURES: MainOptionProps[] = [
+    {
+      name: 'Contagem de Células',
+      imageUrl:
+        'https://images.unsplash.com/photo-1638271522560-a247d127deb8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1315&q=80',
+      onPress: () => {},
+    },
+    {
+      name: 'Quiz',
+      imageUrl:
+        'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1468&q=80',
+      onPress: () => {},
+    },
+  ];
 
   const handleBackButton = () => {
     return true; // OVERRIDE BACK BUTTON EVENTO PADRAO
@@ -80,7 +98,6 @@ export default function MainScreen({ navigation }: MainProps) {
     },
     pageContainer: {
       marginTop: 32,
-      flex: 1,
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
       paddingHorizontal: 16,
@@ -113,6 +130,19 @@ export default function MainScreen({ navigation }: MainProps) {
       <View style={styles.pageContainer}>
         <Text style={styles.headerText}>{main.data}</Text>
       </View>
+      <FlatList
+        data={FEATURES}
+        renderItem={({ item }) => (
+          <MainOption
+            name={item.name}
+            imageUrl={item.imageUrl}
+            onPress={item.onPress}
+          />
+        )}
+        keyExtractor={(item) => item.name}
+        numColumns={2}
+        contentContainerStyle={{ height: '100%', margin: 4 }}
+      />
     </View>
   );
 }
