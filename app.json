@@ -15,17 +15,17 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/153b3c1a-1598-4f62-aacb-f42a87b4864e"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mappe.cellcount"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.mappe.cellcount"
     },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -18,4 +18,6 @@ export default {
   primaryText: '#ffffff',
   secondaries: ['#ffffff', '#ffffff', '#cccccc'],
   secondaryText: '#000000',
+  icons: '#C60000',
+  buttons: '#D80000',
 };

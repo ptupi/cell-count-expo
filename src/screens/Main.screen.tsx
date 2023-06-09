@@ -22,15 +22,15 @@ export default function MainScreen({ navigation }: MainProps) {
 
   const FEATURES: MainOptionProps[] = [
     {
-      name: 'Contagem de Células',
+      name: main.cellCount,
       imageUrl:
-        'https://images.unsplash.com/photo-1638271522560-a247d127deb8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1315&q=80',
+        'https://firebasestorage.googleapis.com/v0/b/cellcount-70b7e.appspot.com/o/MainOptions%2FContagem.png?alt=media&token=106d74ed-3db2-41b6-a3f2-dcc6105ff58c',
       onPress: () => {},
     },
     {
-      name: 'Quiz',
+      name: main.quiz,
       imageUrl:
-        'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1468&q=80',
+        'https://firebasestorage.googleapis.com/v0/b/cellcount-70b7e.appspot.com/o/MainOptions%2FQuiz.png?alt=media&token=f88fc800-8c5a-4fd1-a91f-3a09a80b7b72',
       onPress: () => {},
     },
   ];
@@ -49,6 +49,10 @@ export default function MainScreen({ navigation }: MainProps) {
     };
   });
 
+  const onPressSettings = () => {
+    navigation.navigate('Settings');
+  };
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -56,6 +60,7 @@ export default function MainScreen({ navigation }: MainProps) {
     },
     headerContainer: {
       marginTop: 20,
+      height: 85,
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'center',
@@ -112,7 +117,7 @@ export default function MainScreen({ navigation }: MainProps) {
           <Text style={styles.headerText}>{main.subtitle}</Text>
         </View>
         <View style={styles.headerIconContainer}>
-          <Pressable style={styles.iconContainer} onPress={() => {}}>
+          <Pressable style={styles.iconContainer} onPress={onPressSettings}>
             <MaterialIcons
               name="settings"
               color={colorsStyle.absolutes.black}

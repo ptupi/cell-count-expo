@@ -5,8 +5,12 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack';
 
+import { useAppDispatch, useAppSelector } from '../redux';
+import { setAlertVisible } from '../redux/reducers/alertReducer';
+import ModalAlert from '../components/ModalAlert.component';
 import { RootStackParamList } from './types.route';
 import MainScreen from '../screens/Main.screen';
+import SettingsScreen from '../screens/Settings.screen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -23,14 +27,34 @@ function RootNavigator() {
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
     </Stack.Navigator>
   );
 }
 
 export default function Navigation() {
+  const { visible, title, message } = useAppSelector((state) => state.alert);
+  const dispatch = useAppDispatch();
+
   return (
-    <NavigationContainer>
-      <RootNavigator />
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+      <ModalAlert
+        visible={visible}
+        setVisible={(status: React.SetStateAction<boolean>) => {
+          dispatch(setAlertVisible(Boolean(status)));
+        }}
+        title={title}
+        message={message}
+      />
+    </>
   );
 }

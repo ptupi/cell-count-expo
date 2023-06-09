@@ -21,9 +21,12 @@ import {
   Inter_900Black,
 } from '@expo-google-fonts/inter';
 // import { Asset } from 'expo-asset';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 import colorsStyle from './src/styles/colors.style';
 import Navigation from './src/routes';
+import { store, persistor } from './src/redux';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -80,22 +83,29 @@ export default function App() {
   });
 
   return (
-    <SafeAreaProvider>
-      <StatusBar style="dark" backgroundColor={colorsStyle.absolutes.white} />
-      {appReady ? (
-        <View
-          style={[
-            styles.container,
-            Platform.OS === 'ios'
-              ? styles.containerIos
-              : styles.containerAndroid,
-          ]}
-        >
-          <Navigation />
-        </View>
-      ) : (
-        <View style={styles.splashContainer} />
-      )}
-    </SafeAreaProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={null}>
+        <SafeAreaProvider>
+          <StatusBar
+            style="dark"
+            backgroundColor={colorsStyle.absolutes.white}
+          />
+          {appReady ? (
+            <View
+              style={[
+                styles.container,
+                Platform.OS === 'ios'
+                  ? styles.containerIos
+                  : styles.containerAndroid,
+              ]}
+            >
+              <Navigation />
+            </View>
+          ) : (
+            <View style={styles.splashContainer} />
+          )}
+        </SafeAreaProvider>
+      </PersistGate>
+    </Provider>
   );
 }

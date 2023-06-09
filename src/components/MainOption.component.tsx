@@ -13,6 +13,7 @@ export type MainOptionProps = {
 
 const MainOption = (props: MainOptionProps) => {
   const { name, imageUrl, onPress } = props;
+
   const styles = StyleSheet.create({
     container: {
       width: 160,

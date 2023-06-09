@@ -4,7 +4,7 @@ import {
   PressableProps,
 } from 'react-native';
 
-import colorsStyle from '../styles/colors.style';
+// import colorsStyle from '../styles/colors.style';
 
 const Pressable = (props: PressableProps) => {
   return (
