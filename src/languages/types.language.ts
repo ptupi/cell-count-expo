@@ -15,7 +15,17 @@ type SettingsType = {
   linkError: string;
 };
 
+type EditCellsType = {
+  title: string;
+  deleteTitle: string;
+  deleteMessage: string;
+  standard: string;
+  standardTitle: string;
+  standardMessage: string;
+};
+
 export type LanguageType = {
   main: MainType;
   settings: SettingsType;
+  editCells: EditCellsType;
 };

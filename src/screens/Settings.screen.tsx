@@ -36,6 +36,10 @@ export default function SettingsScreen({ navigation }: SettingsProps) {
 
   const dispatch = useAppDispatch();
 
+  const onPressEditCells = async () => {
+    navigation.navigate('EditCells');
+  };
+
   const onPressContact = async () => {
     const supported = await Linking.canOpenURL(constantsUtils.contactPage);
     if (supported) {
@@ -63,7 +67,7 @@ export default function SettingsScreen({ navigation }: SettingsProps) {
     {
       name: settings.edit,
       icon: 'edit',
-      onPress: () => {},
+      onPress: onPressEditCells,
     },
     {
       name: settings.contact,
@@ -108,7 +112,7 @@ export default function SettingsScreen({ navigation }: SettingsProps) {
       <Header title={settings.title} onPressBack={goBack} />
       <FlatList
         data={OPTIONS}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <SettingsOption
             name={item.name}
             icon={item.icon}
@@ -116,7 +120,8 @@ export default function SettingsScreen({ navigation }: SettingsProps) {
           />
         )}
         keyExtractor={(item) => item.name}
-        contentContainerStyle={{ height: '100%', margin: 16 }}
+        ListHeaderComponent={<View style={{ marginTop: 16 }} />}
+        ListFooterComponent={<View style={{ marginTop: 16 }} />}
       />
     </View>
   );

@@ -10,10 +10,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 export type HeaderProps = {
   title: string;
   onPressBack: () => void;
+  onPressAdd?: () => void;
 };
 
 const Header = (props: HeaderProps) => {
-  const { title, onPressBack } = props;
+  const { title, onPressBack, onPressAdd } = props;
 
   const styles = StyleSheet.create({
     container: {
@@ -62,7 +63,13 @@ const Header = (props: HeaderProps) => {
         <View style={styles.textContainer}>
           <Text style={styles.text}>{title}</Text>
         </View>
-        <View style={styles.iconContainer} />
+        {onPressAdd != null ? (
+          <Pressable style={styles.iconContainer} onPress={onPressAdd}>
+            <MaterialIcons name="add" color={colorsStyle.icons} size={32} />
+          </Pressable>
+        ) : (
+          <View style={styles.iconContainer} />
+        )}
       </View>
       <LinearGradient
         colors={[colorsStyle.absolutes.white, colorsStyle.absolutes.red]}

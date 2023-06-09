@@ -7,10 +7,13 @@ import {
 
 import { useAppDispatch, useAppSelector } from '../redux';
 import { setAlertVisible } from '../redux/reducers/alertReducer';
+import { setConfirmVisible } from '../redux/reducers/confirmReducer';
 import ModalAlert from '../components/ModalAlert.component';
 import { RootStackParamList } from './types.route';
 import MainScreen from '../screens/Main.screen';
 import SettingsScreen from '../screens/Settings.screen';
+import EditCellsScreen from '../screens/EditCells.screen';
+import ModalConfirm from '../components/ModalConfirm.component';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -34,12 +37,26 @@ function RootNavigator() {
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />
+      <Stack.Screen
+        name="EditCells"
+        component={EditCellsScreen}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
     </Stack.Navigator>
   );
 }
 
 export default function Navigation() {
   const { visible, title, message } = useAppSelector((state) => state.alert);
+  const {
+    visible: confirmVisible,
+    title: confirmTitle,
+    message: confirmMessage,
+    handleConfirm,
+  } = useAppSelector((state) => state.confirm);
+
   const dispatch = useAppDispatch();
 
   return (
@@ -54,6 +71,15 @@ export default function Navigation() {
         }}
         title={title}
         message={message}
+      />
+      <ModalConfirm
+        visible={confirmVisible}
+        setVisible={(status: React.SetStateAction<boolean>) => {
+          dispatch(setConfirmVisible(Boolean(status)));
+        }}
+        title={confirmTitle}
+        message={confirmMessage}
+        handleConfirm={handleConfirm}
       />
     </>
   );

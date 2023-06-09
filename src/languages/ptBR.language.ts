@@ -10,11 +10,19 @@ export const ptBR: LanguageType = {
   },
   settings: {
     title: 'Opções',
-    edit: 'Alterar células',
+    edit: 'Configurar células',
     contact: 'Entrar em contato',
     rate: 'Avaliar',
     alertTitle: 'Ops',
     linkError: 'Não foi possível abrir a página.',
+  },
+  editCells: {
+    title: 'Configurar células',
+    deleteTitle: 'Atenção',
+    deleteMessage: 'Você realmente deseja apagar a célula {{name}}?',
+    standard: 'Restaurar padrão',
+    standardTitle: 'Atenção',
+    standardMessage: 'Você realmente deseja restaurar o padrão de células?',
   },
 };
 

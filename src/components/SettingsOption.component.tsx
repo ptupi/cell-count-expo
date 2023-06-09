@@ -22,6 +22,7 @@ const SettingsOption = (props: SettingsOptionProps) => {
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'center',
+      marginHorizontal: 16,
     },
     iconContainer: {
       width: 40,
