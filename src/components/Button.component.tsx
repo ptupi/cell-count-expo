@@ -10,10 +10,11 @@ export type ButtonProps = {
   title: string;
   onPress: () => void;
   icon: any;
+  disabled?: boolean;
 };
 
 const Button = (props: ButtonProps) => {
-  const { title, onPress, icon } = props;
+  const { title, onPress, icon, disabled } = props;
 
   const styles = StyleSheet.create({
     pressable: {
@@ -22,7 +23,7 @@ const Button = (props: ButtonProps) => {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colorsStyle.buttons,
+      backgroundColor: disabled ? colorsStyle.greys[2] : colorsStyle.buttons,
       borderRadius: 8,
     },
     pressableText: {
@@ -36,7 +37,7 @@ const Button = (props: ButtonProps) => {
   });
 
   return (
-    <Pressable style={styles.pressable} onPress={onPress}>
+    <Pressable style={styles.pressable} onPress={onPress} disabled={disabled}>
       {icon != null && (
         <MaterialIcons
           name={icon}

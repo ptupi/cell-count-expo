@@ -147,6 +147,7 @@ export default function MainScreen({ navigation }: MainProps) {
         keyExtractor={(item) => item.name}
         numColumns={2}
         contentContainerStyle={{ height: '100%', margin: 4 }}
+        overScrollMode="never"
       />
     </View>
   );

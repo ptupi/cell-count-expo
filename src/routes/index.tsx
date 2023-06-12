@@ -15,6 +15,7 @@ import MainScreen from '../screens/Main.screen';
 import SettingsScreen from '../screens/Settings.screen';
 import EditCellsScreen from '../screens/EditCells.screen';
 import EditCellScreen from '../screens/EditCell.screen';
+import NewCellScreen from '../screens/NewCell.screen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -57,6 +58,29 @@ function RootNavigator() {
             name: 'Blasto',
             tag: 'Bls',
           },
+          cellList: [
+            {
+              order: 1,
+              name: 'Blasto',
+              tag: 'Bls',
+            },
+          ],
+        }}
+      />
+      <Stack.Screen
+        name="NewCell"
+        component={NewCellScreen}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+        initialParams={{
+          cellList: [
+            {
+              order: 1,
+              name: 'Blasto',
+              tag: 'Bls',
+            },
+          ],
         }}
       />
     </Stack.Navigator>

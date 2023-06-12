@@ -30,9 +30,18 @@ type EditCellType = {
   save: string;
 };
 
+type NewCellType = {
+  title: string;
+  desc: string;
+  save: string;
+  placeName: string;
+  placeTag: string;
+};
+
 export type LanguageType = {
   main: MainType;
   settings: SettingsType;
   editCells: EditCellsType;
   editCell: EditCellType;
+  newCell: NewCellType;
 };

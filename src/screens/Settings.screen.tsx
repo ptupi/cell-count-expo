@@ -122,6 +122,7 @@ export default function SettingsScreen({ navigation }: SettingsProps) {
         keyExtractor={(item) => item.name}
         ListHeaderComponent={<View style={{ marginTop: 16 }} />}
         ListFooterComponent={<View style={{ marginTop: 16 }} />}
+        overScrollMode="never"
       />
     </View>
   );

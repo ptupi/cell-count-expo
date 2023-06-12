@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { BackHandler, FlatList, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
@@ -35,11 +35,29 @@ export default function EditCellsScreen({ navigation }: EditCellsProps) {
   const [cellList, setCellList] = useState([] as Cell[]);
   const [selectedCell, setSelectedCell] = useState({} as Cell);
 
+  const flatRef = useRef<FlatList>(null);
+
   useEffect(() => {
     if (customCellList != null && customCellList.length > 0) {
-      setCellList(customCellList);
+      const sortedCustomList = [...customCellList].sort((a, b) => {
+        if (a.order > b.order) {
+          return 1;
+        } else if (a.order < b.order) {
+          return -1;
+        }
+        return 0;
+      });
+      setCellList(sortedCustomList);
     } else {
-      setCellList(stdCellList);
+      const sortedStdList = [...stdCellList].sort((a, b) => {
+        if (a.order > b.order) {
+          return 1;
+        } else if (a.order < b.order) {
+          return -1;
+        }
+        return 0;
+      });
+      setCellList(sortedStdList);
     }
   }, [customCellList]);
 
@@ -63,7 +81,7 @@ export default function EditCellsScreen({ navigation }: EditCellsProps) {
   });
 
   const onPressCell = (item: Cell) => {
-    if (item.name === selectedCell.name) {
+    if (item.order === selectedCell.order) {
       setSelectedCell({} as Cell);
     } else {
       setSelectedCell(item);
@@ -72,7 +90,9 @@ export default function EditCellsScreen({ navigation }: EditCellsProps) {
 
   const onConfirmDelete = (item: Cell) => {
     const newCustomCellList = [...cellList];
-    const indexToSplice = cellList.findIndex((cell) => cell.name === item.name);
+    const indexToSplice = cellList.findIndex(
+      (cell) => cell.order === item.order
+    );
     newCustomCellList.splice(indexToSplice, 1);
     const translatedCustomCellList = [...newCustomCellList];
     newCustomCellList.forEach((cell, index) => {
@@ -108,11 +128,12 @@ export default function EditCellsScreen({ navigation }: EditCellsProps) {
 
   const onPressEdit = (item: Cell) => {
     setSelectedCell({} as Cell);
-    navigation.navigate('EditCell', { cell: item });
+    navigation.navigate('EditCell', { cell: item, cellList });
   };
 
   const onPressAdd = () => {
     setSelectedCell({} as Cell);
+    navigation.navigate('NewCell', { cellList });
   };
 
   const styles = StyleSheet.create({
@@ -146,17 +167,18 @@ export default function EditCellsScreen({ navigation }: EditCellsProps) {
         onPressAdd={onPressAdd}
       />
       <FlatList
+        ref={flatRef}
         data={cellList}
         renderItem={({ item }) => (
           <CellListOption
             cell={item}
-            open={selectedCell.name === item.name}
+            open={selectedCell.order === item.order}
             onPress={onPressCell}
             onPressEdit={onPressEdit}
             onPressDelete={onPressDelete}
           />
         )}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.order.toString()}
         ListFooterComponent={
           <>
             <View style={{ marginTop: 16 }} />
@@ -170,6 +192,7 @@ export default function EditCellsScreen({ navigation }: EditCellsProps) {
             </Pressable>
           </>
         }
+        overScrollMode="never"
       />
     </View>
   );

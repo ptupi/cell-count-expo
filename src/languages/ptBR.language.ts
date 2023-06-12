@@ -29,6 +29,13 @@ export const ptBR: LanguageType = {
     desc: 'Altere abaixo os dados da célula:',
     save: 'Salvar alterações',
   },
+  newCell: {
+    title: 'Nova célula',
+    desc: 'Insira abaixo os dados da nova célula:',
+    save: 'Salvar alterações',
+    placeName: 'Nome',
+    placeTag: 'Tag',
+  },
 };
 
 export default null;

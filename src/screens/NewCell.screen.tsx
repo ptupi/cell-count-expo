@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   BackHandler,
   StyleSheet,
-  TextInput as TextInputReactNative,
   View,
+  TextInput as TextInputReactNative,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, useFocusEffect } from '@react-navigation/native';
@@ -20,25 +20,22 @@ import TextInput from '../components/TextInput.component';
 import { isEmptyString } from '../utils/validator.utils';
 import { useAppDispatch } from '../redux';
 
-type EditCellNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'EditCell'
->;
-type EditCellRouteProp = RouteProp<RootStackParamList, 'EditCell'>;
-type EditCellProps = {
-  navigation: EditCellNavigationProp;
-  route: EditCellRouteProp;
+type NewCellNavigationProp = StackNavigationProp<RootStackParamList, 'NewCell'>;
+type NewCellRouteProp = RouteProp<RootStackParamList, 'NewCell'>;
+type NewCellProps = {
+  navigation: NewCellNavigationProp;
+  route: NewCellRouteProp;
 };
 
-export default function EditCellScreen({ navigation, route }: EditCellProps) {
-  const { editCell } = language;
-  const { cell, cellList } = route.params;
+export default function NewCellScreen({ navigation, route }: NewCellProps) {
+  const { newCell } = language;
+  const { cellList } = route.params;
 
   const dispatch = useAppDispatch();
 
-  const [order, setOrder] = useState(cell.order);
-  const [name, setName] = useState(cell.name);
-  const [tag, setTag] = useState(cell.tag);
+  const [order, setOrder] = useState(cellList.length + 1);
+  const [name, setName] = useState('');
+  const [tag, setTag] = useState('');
 
   const nameRef = useRef<TextInputReactNative>(null);
   const tagRef = useRef<TextInputReactNative>(null);
@@ -46,7 +43,9 @@ export default function EditCellScreen({ navigation, route }: EditCellProps) {
   const [validData, setValidData] = useState(false);
   useEffect(() => {
     const valid =
-      (order !== cell.order || name !== cell.name || tag !== cell.tag) &&
+      cellList.find((cell) => cell.order === order) == null &&
+      cellList.find((cell) => cell.name === name) == null &&
+      cellList.find((cell) => cell.tag === tag) == null &&
       !isEmptyString(order.toString()) &&
       !isEmptyString(name) &&
       !isEmptyString(tag);
@@ -79,10 +78,7 @@ export default function EditCellScreen({ navigation, route }: EditCellProps) {
       tag,
     };
     const newCustomCellList = [...cellList];
-    const indexToChange = cellList.findIndex(
-      (item) => item.order === cell.order
-    );
-    newCustomCellList[indexToChange] = newCell;
+    newCustomCellList.push(newCell);
     dispatch(setCustomCellList(newCustomCellList));
     goBack();
   };
@@ -105,12 +101,13 @@ export default function EditCellScreen({ navigation, route }: EditCellProps) {
   return (
     <>
       <View style={styles.container}>
-        <Header title={editCell.title} onPressBack={goBack} />
-        <Text style={styles.desc}>{editCell.desc}</Text>
+        <Header title={newCell.title} onPressBack={goBack} />
+        <Text style={styles.desc}>{newCell.desc}</Text>
         <TextInput
           componentRef={nameRef}
           value={name}
           setValue={setName}
+          placeholder={newCell.placeName}
           returnKeyType="next"
           autoCapitalize="words"
           blurOnSubmit={false}
@@ -122,12 +119,13 @@ export default function EditCellScreen({ navigation, route }: EditCellProps) {
           componentRef={tagRef}
           value={tag}
           setValue={setTag}
+          placeholder={newCell.placeTag}
           autoCapitalize="words"
         />
       </View>
       <Footer>
         <Button
-          title={editCell.save}
+          title={newCell.save}
           onPress={onPressSave}
           icon="save"
           disabled={!validData}
