@@ -108,6 +108,7 @@ export default function EditCellsScreen({ navigation }: EditCellsProps) {
 
   const onPressEdit = (item: Cell) => {
     setSelectedCell({} as Cell);
+    navigation.navigate('EditCell', { cell: item });
   };
 
   const onPressAdd = () => {

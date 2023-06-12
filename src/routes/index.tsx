@@ -9,11 +9,12 @@ import { useAppDispatch, useAppSelector } from '../redux';
 import { setAlertVisible } from '../redux/reducers/alertReducer';
 import { setConfirmVisible } from '../redux/reducers/confirmReducer';
 import ModalAlert from '../components/ModalAlert.component';
+import ModalConfirm from '../components/ModalConfirm.component';
 import { RootStackParamList } from './types.route';
 import MainScreen from '../screens/Main.screen';
 import SettingsScreen from '../screens/Settings.screen';
 import EditCellsScreen from '../screens/EditCells.screen';
-import ModalConfirm from '../components/ModalConfirm.component';
+import EditCellScreen from '../screens/EditCell.screen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -42,6 +43,20 @@ function RootNavigator() {
         component={EditCellsScreen}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        name="EditCell"
+        component={EditCellScreen}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+        initialParams={{
+          cell: {
+            order: 1,
+            name: 'Blasto',
+            tag: 'Bls',
+          },
         }}
       />
     </Stack.Navigator>

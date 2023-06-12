@@ -24,8 +24,15 @@ type EditCellsType = {
   standardMessage: string;
 };
 
+type EditCellType = {
+  title: string;
+  desc: string;
+  save: string;
+};
+
 export type LanguageType = {
   main: MainType;
   settings: SettingsType;
   editCells: EditCellsType;
+  editCell: EditCellType;
 };

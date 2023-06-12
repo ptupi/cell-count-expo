@@ -24,6 +24,11 @@ export const ptBR: LanguageType = {
     standardTitle: 'Atenção',
     standardMessage: 'Você realmente deseja restaurar o padrão de células?',
   },
+  editCell: {
+    title: 'Alterar célula',
+    desc: 'Altere abaixo os dados da célula:',
+    save: 'Salvar alterações',
+  },
 };
 
 export default null;
