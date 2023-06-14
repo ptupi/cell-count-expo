@@ -27,7 +27,7 @@ const TextInput = (props: CustomInputProps & TextInputProps) => {
     input: {
       flex: 1,
       textAlign: 'left',
-      borderBottomColor: colorsStyle.greys[5],
+      borderBottomColor: colorsStyle.greys[3],
       borderBottomWidth: 1,
       fontFamily: Fonts.Inter_300Light,
       fontSize: 16,

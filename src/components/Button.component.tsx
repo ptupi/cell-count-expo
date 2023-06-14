@@ -9,7 +9,7 @@ import Text, { Fonts } from './Text.component';
 export type ButtonProps = {
   title: string;
   onPress: () => void;
-  icon: any;
+  icon?: any;
   disabled?: boolean;
 };
 

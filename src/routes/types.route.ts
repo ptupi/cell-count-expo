@@ -11,4 +11,5 @@ export type RootStackParamList = {
     cellList: Cell[];
   };
   NewCell: { cellList: Cell[] };
+  CountSetup: undefined;
 };

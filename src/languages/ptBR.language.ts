@@ -36,6 +36,14 @@ export const ptBR: LanguageType = {
     placeName: 'Nome',
     placeTag: 'Tag',
   },
+  countSetup: {
+    title: 'Contagem de células',
+    desc: 'Para começar a contagem, preencha as informacoes abaixo:',
+    maxCount: 'Contagem máxima',
+    maxCountTitle: 'Selecione uma opção',
+    totalLeu: 'Leucócitos Totais (céls/μL)',
+    start: 'Iniciar contagem',
+  },
 };
 
 export default null;

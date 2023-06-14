@@ -38,10 +38,20 @@ type NewCellType = {
   placeTag: string;
 };
 
+type CountSetupType = {
+  title: string;
+  desc: string;
+  maxCount: string;
+  maxCountTitle: string;
+  totalLeu: string;
+  start: string;
+};
+
 export type LanguageType = {
   main: MainType;
   settings: SettingsType;
   editCells: EditCellsType;
   editCell: EditCellType;
   newCell: NewCellType;
+  countSetup: CountSetupType;
 };

@@ -20,12 +20,16 @@ type MainProps = { navigation: MainNavigationProp };
 export default function MainScreen({ navigation }: MainProps) {
   const { main } = language;
 
+  const onPressCellCount = () => {
+    navigation.navigate('CountSetup');
+  };
+
   const FEATURES: MainOptionProps[] = [
     {
       name: main.cellCount,
       imageUrl:
         'https://firebasestorage.googleapis.com/v0/b/cellcount-70b7e.appspot.com/o/MainOptions%2FContagem.png?alt=media&token=106d74ed-3db2-41b6-a3f2-dcc6105ff58c',
-      onPress: () => {},
+      onPress: onPressCellCount,
     },
     {
       name: main.quiz,

@@ -12,6 +12,7 @@ export default {
     black75: 'rgba(0, 0, 0, 0.75)',
     black90: 'rgba(0, 0, 0, 0.90)',
     red25: 'rgba(216, 0, 0, 0.25)',
+    red15: 'rgba(216, 0, 0, 0.15)',
   },
   greys: ['#2C2D2E', '#6C7276', '#A8ABAD', '#D9DADC', '#F2F3F5', '#545151'],
   primaries: ['#ff7468', '#e93e3d', '#af0015'],
