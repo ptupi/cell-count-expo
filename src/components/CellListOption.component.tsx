@@ -140,7 +140,11 @@ const CellListOption = (props: CellListOptionProps) => {
         />
       </Pressable>
       <Animated.View style={animatedButtonPosition}>
-        <Pressable style={styles.container} onPress={() => onPress(cell)}>
+        <Pressable
+          style={styles.container}
+          onPress={() => onPress(cell)}
+          disabled={cell.type === 'erit'}
+        >
           <View style={styles.orderContainer}>
             <Text style={styles.order}>{cell.order}.</Text>
           </View>
@@ -148,13 +152,15 @@ const CellListOption = (props: CellListOptionProps) => {
             <Text style={styles.name}>{cell.name}</Text>
             <Text style={styles.tag}>{cell.tag}</Text>
           </View>
-          <Animated.View style={[styles.iconContainer, animatedDotsRotation]}>
-            <MaterialIcons
-              name="more-vert"
-              color={colorsStyle.icons}
-              size={24}
-            />
-          </Animated.View>
+          {cell.type !== 'erit' && (
+            <Animated.View style={[styles.iconContainer, animatedDotsRotation]}>
+              <MaterialIcons
+                name="more-vert"
+                color={colorsStyle.icons}
+                size={24}
+              />
+            </Animated.View>
+          )}
         </Pressable>
       </Animated.View>
     </View>

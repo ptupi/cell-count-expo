@@ -44,6 +44,17 @@ export const ptBR: LanguageType = {
     totalLeu: 'Leucócitos Totais (céls/μL)',
     start: 'Iniciar contagem',
   },
+  count: {
+    title: 'Contagem de células',
+    desc: 'Selecione as quantidades clicando em cada célula:',
+    end: 'Finalizar',
+    reset: 'Reiniciar',
+    undo: 'Desfazer',
+    resetTitle: 'Atenção',
+    resetMsg: 'Tem certeza de que deseja reiniciar a contagem?',
+    descErit: 'Nº de Eritroblastos: ',
+    descCell: 'Nº de outras células: ',
+  },
 };
 
 export default null;

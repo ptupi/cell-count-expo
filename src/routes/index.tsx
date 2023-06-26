@@ -17,6 +17,7 @@ import EditCellsScreen from '../screens/EditCells.screen';
 import EditCellScreen from '../screens/EditCell.screen';
 import NewCellScreen from '../screens/NewCell.screen';
 import CountSetupScreen from '../screens/CountSetup.screen';
+import CountScreen from '../screens/Count.screen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -89,6 +90,13 @@ function RootNavigator() {
               tag: 'Bls',
             },
           ],
+        }}
+      />
+      <Stack.Screen
+        name="Count"
+        component={CountScreen}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
         }}
       />
     </Stack.Navigator>

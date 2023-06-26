@@ -20,13 +20,13 @@ import Button from '../components/Button.component';
 import TextInput from '../components/TextInput.component';
 import { maskOnlyNumbers } from '../utils/masks.utils';
 
-type SettingsNavigationProp = StackNavigationProp<
+type CountSetupNavigationProp = StackNavigationProp<
   RootStackParamList,
-  'Settings'
+  'CountSetup'
 >;
-type SettingsProps = { navigation: SettingsNavigationProp };
+type CountSetupProps = { navigation: CountSetupNavigationProp };
 
-export default function SettingsScreen({ navigation }: SettingsProps) {
+export default function CountSetupScreen({ navigation }: CountSetupProps) {
   const MAX_COUNT: PickerOption[] = [
     {
       id: 0,
@@ -115,7 +115,9 @@ export default function SettingsScreen({ navigation }: SettingsProps) {
     };
   });
 
-  const onPressStartCount = () => {};
+  const onPressStartCount = () => {
+    navigation.navigate('Count', { maxCount, leu: Number(leu) });
+  };
 
   const styles = StyleSheet.create({
     container: {

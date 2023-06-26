@@ -1,6 +1,7 @@
 import { FlatList } from 'react-native';
 
 import { Cell } from '../redux/reducers/userReducer';
+import { PickerOption } from '../components/Picker.component';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -12,4 +13,5 @@ export type RootStackParamList = {
   };
   NewCell: { cellList: Cell[] };
   CountSetup: undefined;
+  Count: { maxCount: PickerOption; leu: number };
 };

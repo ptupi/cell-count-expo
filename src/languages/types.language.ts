@@ -47,6 +47,18 @@ type CountSetupType = {
   start: string;
 };
 
+type CountType = {
+  title: string;
+  desc: string;
+  end: string;
+  undo: string;
+  reset: string;
+  resetTitle: string;
+  resetMsg: string;
+  descErit: string;
+  descCell: string;
+};
+
 export type LanguageType = {
   main: MainType;
   settings: SettingsType;
@@ -54,4 +66,5 @@ export type LanguageType = {
   editCell: EditCellType;
   newCell: NewCellType;
   countSetup: CountSetupType;
+  count: CountType;
 };
