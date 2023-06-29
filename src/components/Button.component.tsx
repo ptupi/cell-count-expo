@@ -23,7 +23,7 @@ const Button = (props: ButtonProps) => {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: disabled ? colorsStyle.greys[2] : colorsStyle.buttons,
+      backgroundColor: disabled ? colorsStyle.greys[3] : colorsStyle.buttons,
       borderRadius: 8,
     },
     pressableText: {
@@ -32,7 +32,7 @@ const Button = (props: ButtonProps) => {
       lineHeight: 20,
       textAlign: 'center',
       fontFamily: Fonts.Inter_700Bold,
-      color: colorsStyle.absolutes.white,
+      color: disabled ? colorsStyle.greys[2] : colorsStyle.absolutes.white,
     },
   });
 

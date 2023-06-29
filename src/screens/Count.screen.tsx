@@ -39,12 +39,19 @@ export default function CountScreen({ navigation, route }: CountProps) {
 
   const [cellList, setCellList] = useState([] as Cell[]);
   const [currentCount, setCurrentCount] = useState([] as Cell[]);
+  const [cellCount, setCellCount] = useState(0);
+  const [eritCount, setEritCount] = useState(0);
 
   const flatRef = useRef<FlatList>(null);
 
   const [validData, setValidData] = useState(false);
   useEffect(() => {
-    const valid = currentCount.length === maxCount.value;
+    const currentValidCount = currentCount.filter(
+      (cell) => cell.type !== 'erit'
+    );
+    setCellCount(currentValidCount.length);
+    setEritCount(currentCount.length - currentValidCount.length);
+    const valid = currentValidCount.length === maxCount.value;
     setValidData(valid);
   }, [currentCount]);
 
@@ -91,9 +98,17 @@ export default function CountScreen({ navigation, route }: CountProps) {
     };
   });
 
+  const onCountCell = (cell: Cell) => {
+    const newCurrentCount = [...currentCount];
+    newCurrentCount.push(cell);
+    setCurrentCount(newCurrentCount);
+  };
+
   const onPressEndCount = () => {};
 
-  const onConfirmReset = () => {};
+  const onConfirmReset = () => {
+    setCurrentCount([]);
+  };
 
   const onPressReset = () => {
     dispatch(setConfirmTitle(count.resetTitle));
@@ -102,7 +117,11 @@ export default function CountScreen({ navigation, route }: CountProps) {
     dispatch(setConfirmVisible(true));
   };
 
-  const onPressUndo = () => {};
+  const onPressUndo = () => {
+    const newCurrentCount = [...currentCount];
+    newCurrentCount.splice(currentCount.length - 1, 1);
+    setCurrentCount(newCurrentCount);
+  };
 
   const styles = StyleSheet.create({
     container: {
@@ -134,6 +153,9 @@ export default function CountScreen({ navigation, route }: CountProps) {
       justifyContent: 'center',
       alignItems: 'center',
     },
+    cellDisabled: {
+      backgroundColor: colorsStyle.greys[3],
+    },
     erit: {
       backgroundColor: colorsStyle.buttons,
     },
@@ -143,6 +165,9 @@ export default function CountScreen({ navigation, route }: CountProps) {
       lineHeight: 20,
       textAlign: 'center',
       color: colorsStyle.absolutes.white,
+    },
+    tagDisabled: {
+      color: colorsStyle.greys[2],
     },
     actions: {
       alignSelf: 'center',
@@ -172,12 +197,18 @@ export default function CountScreen({ navigation, route }: CountProps) {
       },
       elevation: 3,
     },
+    iconDisabled: {
+      backgroundColor: colorsStyle.greys[3],
+    },
     iconText: {
       fontFamily: Fonts.Inter_300Light,
       fontSize: 12,
       lineHeight: 16,
       textAlign: 'center',
       color: colorsStyle.absolutes.black,
+    },
+    textDisabled: {
+      opacity: 0.4,
     },
     descErit: {
       marginTop: 16,
@@ -213,12 +244,14 @@ export default function CountScreen({ navigation, route }: CountProps) {
         <Text style={styles.desc}>{count.desc}</Text>
         <Text style={styles.descErit}>
           {count.descErit}
-          <Text style={styles.valueCell}>0</Text>
+          <Text style={styles.valueCell}>{eritCount}</Text>
         </Text>
         <Text style={styles.descCell}>
           {count.descCell}
           <Text style={styles.valueCell}>
-            {'0'.padStart(maxCount.value.toString().length, '0')}
+            {cellCount
+              .toString()
+              .padStart(maxCount.value.toString().length, '0')}
           </Text>
           /{maxCount.value}
         </Text>
@@ -226,9 +259,19 @@ export default function CountScreen({ navigation, route }: CountProps) {
           ref={flatRef}
           data={cellList}
           renderItem={({ item }: { item: Cell }) => (
-            <View style={[styles.cell, item.type === 'erit' && styles.erit]}>
-              <Text style={styles.tag}>{item.tag}</Text>
-            </View>
+            <Pressable
+              onPress={() => onCountCell(item)}
+              disabled={validData}
+              style={[
+                styles.cell,
+                item.type === 'erit' && styles.erit,
+                validData && styles.cellDisabled,
+              ]}
+            >
+              <Text style={[styles.tag, validData && styles.tagDisabled]}>
+                {item.tag}
+              </Text>
+            </Pressable>
           )}
           keyExtractor={(item) => item.order.toString()}
           overScrollMode="never"
@@ -239,25 +282,65 @@ export default function CountScreen({ navigation, route }: CountProps) {
             <>
               <View style={{ marginTop: 16 }} />
               <View style={styles.actions}>
-                <Pressable style={styles.action} onPress={onPressReset}>
-                  <View style={styles.icon}>
+                <Pressable
+                  style={styles.action}
+                  onPress={onPressReset}
+                  disabled={currentCount.length === 0}
+                >
+                  <View
+                    style={[
+                      styles.icon,
+                      currentCount.length === 0 && styles.iconDisabled,
+                    ]}
+                  >
                     <MaterialCommunityIcons
                       name="restore"
-                      color={colorsStyle.absolutes.black}
+                      color={
+                        currentCount.length === 0
+                          ? colorsStyle.greys[2]
+                          : colorsStyle.absolutes.black
+                      }
                       size={24}
                     />
                   </View>
-                  <Text style={styles.iconText}>{count.reset}</Text>
+                  <Text
+                    style={[
+                      styles.iconText,
+                      currentCount.length === 0 && styles.textDisabled,
+                    ]}
+                  >
+                    {count.reset}
+                  </Text>
                 </Pressable>
-                <Pressable style={styles.action} onPress={onPressUndo}>
-                  <View style={styles.icon}>
+                <Pressable
+                  style={styles.action}
+                  onPress={onPressUndo}
+                  disabled={currentCount.length === 0}
+                >
+                  <View
+                    style={[
+                      styles.icon,
+                      currentCount.length === 0 && styles.iconDisabled,
+                    ]}
+                  >
                     <MaterialCommunityIcons
                       name="undo"
-                      color={colorsStyle.absolutes.black}
+                      color={
+                        currentCount.length === 0
+                          ? colorsStyle.greys[2]
+                          : colorsStyle.absolutes.black
+                      }
                       size={24}
                     />
                   </View>
-                  <Text style={styles.iconText}>{count.undo}</Text>
+                  <Text
+                    style={[
+                      styles.iconText,
+                      currentCount.length === 0 && styles.textDisabled,
+                    ]}
+                  >
+                    {count.undo}
+                  </Text>
                 </Pressable>
               </View>
               <View style={{ marginTop: 16 }} />
