@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, Modal, ScrollView, ViewProps } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Modal,
+  ScrollView,
+  ViewProps,
+  TouchableOpacity,
+} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -236,13 +243,14 @@ const Picker = (props: PickerProps & ViewProps) => {
               showsVerticalScrollIndicator={false}
             >
               {options.map((item) => (
-                <Pressable
+                <TouchableOpacity
                   key={item.id}
                   onPress={() => handleSelectItem(item)}
                   style={[
                     styles.pickerItem,
                     selected?.id === item.id && styles.selectedPickerItem,
                   ]}
+                  activeOpacity={0.4}
                 >
                   <Text
                     style={[
@@ -253,7 +261,7 @@ const Picker = (props: PickerProps & ViewProps) => {
                   >
                     {item.label}
                   </Text>
-                </Pressable>
+                </TouchableOpacity>
               ))}
             </ScrollView>
           </View>

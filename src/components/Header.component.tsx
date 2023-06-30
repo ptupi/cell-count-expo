@@ -10,11 +10,12 @@ import { LinearGradient } from 'expo-linear-gradient';
 export type HeaderProps = {
   title: string;
   onPressBack: () => void;
-  onPressAdd?: () => void;
+  icon?: any;
+  onPressIcon?: () => void;
 };
 
 const Header = (props: HeaderProps) => {
-  const { title, onPressBack, onPressAdd } = props;
+  const { title, onPressBack, icon, onPressIcon } = props;
 
   const styles = StyleSheet.create({
     container: {
@@ -27,10 +28,18 @@ const Header = (props: HeaderProps) => {
       paddingVertical: 12,
     },
     iconContainer: {
-      height: 40,
-      width: 40,
+      height: 36,
+      width: 36,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    rightIconContainer: {
+      height: 36,
+      width: 36,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 18,
+      backgroundColor: colorsStyle.opacity.red25,
     },
     textContainer: {
       flex: 1,
@@ -63,9 +72,13 @@ const Header = (props: HeaderProps) => {
         <View style={styles.textContainer}>
           <Text style={styles.text}>{title}</Text>
         </View>
-        {onPressAdd != null ? (
-          <Pressable style={styles.iconContainer} onPress={onPressAdd}>
-            <MaterialIcons name="add" color={colorsStyle.icons} size={32} />
+        {icon != null ? (
+          <Pressable style={styles.rightIconContainer} onPress={onPressIcon}>
+            <MaterialIcons
+              name={icon}
+              color={colorsStyle.absolutes.black}
+              size={24}
+            />
           </Pressable>
         ) : (
           <View style={styles.iconContainer} />

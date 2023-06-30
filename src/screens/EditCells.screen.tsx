@@ -164,7 +164,8 @@ export default function EditCellsScreen({ navigation }: EditCellsProps) {
       <Header
         title={editCells.title}
         onPressBack={goBack}
-        onPressAdd={onPressAdd}
+        icon="add"
+        onPressIcon={onPressAdd}
       />
       <FlatList
         ref={flatRef}

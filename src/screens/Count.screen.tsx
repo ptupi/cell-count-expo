@@ -9,6 +9,7 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 
 import { language } from '../languages';
 import { RootStackParamList } from '../routes/types.route';
@@ -25,6 +26,7 @@ import {
   setConfirmTitle,
   setConfirmVisible,
 } from '../redux/reducers/confirmReducer';
+import CellCount from '../components/CellCount.component';
 
 type CountNavigationProp = StackNavigationProp<RootStackParamList, 'Count'>;
 type CountRouteProp = RouteProp<RootStackParamList, 'Count'>;
@@ -84,7 +86,6 @@ export default function CountScreen({ navigation, route }: CountProps) {
   };
 
   const handleBackButton = () => {
-    goBack();
     return true; // OVERRIDE BACK BUTTON EVENTO PADRAO
   };
 
@@ -99,12 +100,22 @@ export default function CountScreen({ navigation, route }: CountProps) {
   });
 
   const onCountCell = (cell: Cell) => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     const newCurrentCount = [...currentCount];
     newCurrentCount.push(cell);
     setCurrentCount(newCurrentCount);
   };
 
-  const onPressEndCount = () => {};
+  const onConfirmEnd = () => {
+    navigation.navigate('Report', { maxCount, leu, currentCount });
+  };
+
+  const onPressEndCount = () => {
+    dispatch(setConfirmTitle(count.endTitle));
+    dispatch(setConfirmMessage(count.endMsg));
+    dispatch(setConfirmHandleConfirm(onConfirmEnd));
+    dispatch(setConfirmVisible(true));
+  };
 
   const onConfirmReset = () => {
     setCurrentCount([]);
@@ -118,6 +129,7 @@ export default function CountScreen({ navigation, route }: CountProps) {
   };
 
   const onPressUndo = () => {
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     const newCurrentCount = [...currentCount];
     newCurrentCount.splice(currentCount.length - 1, 1);
     setCurrentCount(newCurrentCount);
@@ -143,31 +155,6 @@ export default function CountScreen({ navigation, route }: CountProps) {
       alignSelf: 'center',
       justifyContent: 'center',
       alignItems: 'center',
-    },
-    cell: {
-      margin: 8,
-      width: 58,
-      height: 58,
-      borderRadius: 29,
-      backgroundColor: colorsStyle.absolutes.black,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    cellDisabled: {
-      backgroundColor: colorsStyle.greys[3],
-    },
-    erit: {
-      backgroundColor: colorsStyle.buttons,
-    },
-    tag: {
-      fontFamily: Fonts.Inter_700Bold,
-      fontSize: 16,
-      lineHeight: 20,
-      textAlign: 'center',
-      color: colorsStyle.absolutes.white,
-    },
-    tagDisabled: {
-      color: colorsStyle.greys[2],
     },
     actions: {
       alignSelf: 'center',
@@ -259,19 +246,12 @@ export default function CountScreen({ navigation, route }: CountProps) {
           ref={flatRef}
           data={cellList}
           renderItem={({ item }: { item: Cell }) => (
-            <Pressable
-              onPress={() => onCountCell(item)}
+            <CellCount
+              cell={item}
+              onPress={onCountCell}
+              currentCount={currentCount}
               disabled={validData}
-              style={[
-                styles.cell,
-                item.type === 'erit' && styles.erit,
-                validData && styles.cellDisabled,
-              ]}
-            >
-              <Text style={[styles.tag, validData && styles.tagDisabled]}>
-                {item.tag}
-              </Text>
-            </Pressable>
+            />
           )}
           keyExtractor={(item) => item.order.toString()}
           overScrollMode="never"
@@ -280,7 +260,7 @@ export default function CountScreen({ navigation, route }: CountProps) {
           contentContainerStyle={styles.flatListContent}
           ListFooterComponent={
             <>
-              <View style={{ marginTop: 16 }} />
+              <View style={{ marginTop: 24 }} />
               <View style={styles.actions}>
                 <Pressable
                   style={styles.action}

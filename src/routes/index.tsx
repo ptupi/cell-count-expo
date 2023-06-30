@@ -18,6 +18,7 @@ import EditCellScreen from '../screens/EditCell.screen';
 import NewCellScreen from '../screens/NewCell.screen';
 import CountSetupScreen from '../screens/CountSetup.screen';
 import CountScreen from '../screens/Count.screen';
+import ReportScreen from '../screens/Report.screen';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -97,6 +98,46 @@ function RootNavigator() {
         component={CountScreen}
         options={{
           ...TransitionPresets.SlideFromRightIOS,
+        }}
+        initialParams={{
+          leu: 100,
+          maxCount: {
+            id: 1,
+            label: '100 células',
+            value: 100,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Report"
+        component={ReportScreen}
+        options={{
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+        initialParams={{
+          leu: 100,
+          maxCount: {
+            id: 1,
+            label: '100 células',
+            value: 100,
+          },
+          currentCount: [
+            {
+              order: 1,
+              name: 'Blasto',
+              tag: 'Bls',
+            },
+            {
+              order: 1,
+              name: 'Blasto',
+              tag: 'Bls',
+            },
+            {
+              order: 1,
+              name: 'Blasto',
+              tag: 'Bls',
+            },
+          ],
         }}
       />
     </Stack.Navigator>

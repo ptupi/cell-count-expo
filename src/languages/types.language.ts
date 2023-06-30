@@ -57,6 +57,15 @@ type CountType = {
   resetMsg: string;
   descErit: string;
   descCell: string;
+  endTitle: string;
+  endMsg: string;
+};
+
+type ReportType = {
+  title: string;
+  end: string;
+  endTitle: string;
+  endMsg: string;
 };
 
 export type LanguageType = {
@@ -67,4 +76,5 @@ export type LanguageType = {
   newCell: NewCellType;
   countSetup: CountSetupType;
   count: CountType;
+  report: ReportType;
 };

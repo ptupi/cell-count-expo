@@ -28,6 +28,11 @@ type CountSetupProps = { navigation: CountSetupNavigationProp };
 
 export default function CountSetupScreen({ navigation }: CountSetupProps) {
   const MAX_COUNT: PickerOption[] = [
+    // {
+    //   id: 999,
+    //   label: '10 células',
+    //   value: 10,
+    // },
     {
       id: 0,
       label: '100 células',

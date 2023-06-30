@@ -14,4 +14,5 @@ export type RootStackParamList = {
   NewCell: { cellList: Cell[] };
   CountSetup: undefined;
   Count: { maxCount: PickerOption; leu: number };
+  Report: { maxCount: PickerOption; leu: number; currentCount: Cell[] };
 };

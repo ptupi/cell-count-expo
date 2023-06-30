@@ -41,7 +41,7 @@ const Button = (props: ButtonProps) => {
       {icon != null && (
         <MaterialIcons
           name={icon}
-          color={colorsStyle.absolutes.white}
+          color={disabled ? colorsStyle.greys[2] : colorsStyle.absolutes.white}
           size={24}
         />
       )}

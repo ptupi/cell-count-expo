@@ -51,7 +51,7 @@ const CellListOption = (props: CellListOptionProps) => {
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      borderRadius: 8,
+      borderRadius: 16,
       shadowColor: colorsStyle.absolutes.black,
       shadowOpacity: 0.15,
       shadowRadius: 10,

@@ -54,6 +54,14 @@ export const ptBR: LanguageType = {
     resetMsg: 'Tem certeza de que deseja reiniciar a contagem?',
     descErit: 'Nº de Eritroblastos: ',
     descCell: 'Nº de outras células: ',
+    endTitle: 'Atenção',
+    endMsg: 'Deseja gerar o relatório?',
+  },
+  report: {
+    title: 'Resultado',
+    end: 'Voltar ao início',
+    endTitle: 'Retornar à tela principal?',
+    endMsg: 'Você perderá os dados desta contagem.',
   },
 };
 
