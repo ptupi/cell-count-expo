@@ -62,6 +62,15 @@ export const ptBR: LanguageType = {
     end: 'Voltar ao início',
     endTitle: 'Retornar à tela principal?',
     endMsg: 'Você perderá os dados desta contagem.',
+    leu: 'Leucócitos totais',
+    erit: 'Eritroblastos',
+    global: 'Contagem global corrigida',
+    diff: 'Leucometria\ndiferencial',
+    relative: 'Relativa\n(%)',
+    absolute: 'Absoluta\n(cels/µL)',
+    total: 'Total',
+    count:
+      '* Para obtenção do diferencial de Leucócitos foi considerada a contagem de {{count}} células.',
   },
 };
 

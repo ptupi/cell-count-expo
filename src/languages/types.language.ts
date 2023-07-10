@@ -66,6 +66,14 @@ type ReportType = {
   end: string;
   endTitle: string;
   endMsg: string;
+  leu: string;
+  erit: string;
+  global: string;
+  diff: string;
+  relative: string;
+  absolute: string;
+  total: string;
+  count: string;
 };
 
 export type LanguageType = {

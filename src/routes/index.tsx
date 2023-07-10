@@ -121,21 +121,15 @@ function RootNavigator() {
             label: '100 células',
             value: 100,
           },
-          currentCount: [
+          eritCount: 50,
+          globalCount: 6000,
+          cellResultList: [
             {
               order: 1,
               name: 'Blasto',
               tag: 'Bls',
-            },
-            {
-              order: 1,
-              name: 'Blasto',
-              tag: 'Bls',
-            },
-            {
-              order: 1,
-              name: 'Blasto',
-              tag: 'Bls',
+              relative: 50,
+              absolute: 3000,
             },
           ],
         }}

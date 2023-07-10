@@ -9,6 +9,7 @@ export type MainOptionProps = {
   name: string;
   imageUrl: string;
   onPress: () => void;
+  active?: boolean;
 };
 
 const MainOption = (props: MainOptionProps) => {

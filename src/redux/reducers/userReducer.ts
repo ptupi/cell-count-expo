@@ -7,6 +7,11 @@ export type Cell = {
   type?: 'erit' | 'std';
 };
 
+export type CellResult = Cell & {
+  relative: string | number;
+  absolute: string | number;
+};
+
 interface UserState {
   welcome: boolean;
   stdCellList: Cell[];

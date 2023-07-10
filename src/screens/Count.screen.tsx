@@ -19,7 +19,7 @@ import { useAppDispatch, useAppSelector } from '../redux';
 import Text, { Fonts } from '../components/Text.component';
 import Footer from '../components/Footer.component';
 import Button from '../components/Button.component';
-import { Cell } from '../redux/reducers/userReducer';
+import { Cell, CellResult } from '../redux/reducers/userReducer';
 import {
   setConfirmHandleConfirm,
   setConfirmMessage,
@@ -107,7 +107,42 @@ export default function CountScreen({ navigation, route }: CountProps) {
   };
 
   const onConfirmEnd = () => {
-    navigation.navigate('Report', { maxCount, leu, currentCount });
+    // Calculate report
+    const eritCount = currentCount.filter(
+      (cell) => cell.type === 'erit'
+    ).length;
+    const normalCount = currentCount.length - eritCount;
+    const globalCount = (Number(leu) * normalCount) / (normalCount + eritCount);
+    const cellResultList: CellResult[] = [];
+    cellList
+      .filter((cell) => cell.type !== 'erit')
+      .forEach((element) => {
+        const cellCount = currentCount.filter(
+          (cell) => cell.name === element.name && cell.tag === element.tag
+        ).length;
+        cellResultList.push({
+          ...element,
+          relative: ((cellCount / Number(maxCount.value)) * 100).toFixed(2),
+          absolute: (
+            globalCount *
+            (cellCount / Number(maxCount.value))
+          ).toFixed(2),
+        });
+      });
+    navigation.navigate('Report', {
+      maxCount,
+      leu,
+      eritCount,
+      globalCount,
+      cellResultList: cellResultList.sort((a, b) => {
+        if (a.order > b.order) {
+          return 1;
+        } else if (a.order < b.order) {
+          return -1;
+        }
+        return 0;
+      }),
+    });
   };
 
   const onPressEndCount = () => {

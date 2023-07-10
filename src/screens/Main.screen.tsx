@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BackHandler, FlatList, StyleSheet, View } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
@@ -30,14 +30,22 @@ export default function MainScreen({ navigation }: MainProps) {
       imageUrl:
         'https://firebasestorage.googleapis.com/v0/b/cellcount-70b7e.appspot.com/o/MainOptions%2FContagem.png?alt=media&token=106d74ed-3db2-41b6-a3f2-dcc6105ff58c',
       onPress: onPressCellCount,
+      active: true,
     },
     {
       name: main.quiz,
       imageUrl:
         'https://firebasestorage.googleapis.com/v0/b/cellcount-70b7e.appspot.com/o/MainOptions%2FQuiz.png?alt=media&token=f88fc800-8c5a-4fd1-a91f-3a09a80b7b72',
       onPress: () => {},
+      active: false,
     },
   ];
+
+  const [features, setFeatures] = useState([]);
+
+  useEffect(() => {
+    setFeatures(FEATURES.filter((feat) => feat.active));
+  }, []);
 
   const handleBackButton = () => {
     return true; // OVERRIDE BACK BUTTON EVENTO PADRAO
@@ -140,7 +148,7 @@ export default function MainScreen({ navigation }: MainProps) {
         <Text style={styles.headerText}>{main.data}</Text>
       </View>
       <FlatList
-        data={FEATURES}
+        data={features}
         renderItem={({ item }) => (
           <MainOption
             name={item.name}
