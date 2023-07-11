@@ -1,7 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { BackHandler, ScrollView, StyleSheet, View } from 'react-native';
+import React, { useRef } from 'react';
+import {
+  BackHandler,
+  ScrollView,
+  StyleSheet,
+  View,
+  Share,
+  Platform,
+} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp, useFocusEffect } from '@react-navigation/native';
+import ViewShot from 'react-native-view-shot';
+import * as Sharing from 'expo-sharing';
+import * as Linking from 'expo-linking';
 
 import { language } from '../languages';
 import { RootStackParamList } from '../routes/types.route';
@@ -10,7 +20,6 @@ import Header from '../components/Header.component';
 import { useAppDispatch, useAppSelector } from '../redux';
 import Footer from '../components/Footer.component';
 import Button from '../components/Button.component';
-import { Cell } from '../redux/reducers/userReducer';
 import {
   setConfirmHandleConfirm,
   setConfirmMessage,
@@ -18,6 +27,13 @@ import {
   setConfirmVisible,
 } from '../redux/reducers/confirmReducer';
 import Text, { Fonts } from '../components/Text.component';
+import {
+  setShareOptionsHandleApp,
+  setShareOptionsHandleImage,
+  setShareOptionsVisible,
+} from '../redux/reducers/shareOptionsReducer';
+import constantsUtils from '../utils/constants.utils';
+import { setUserReviewed } from '../redux/reducers/userReducer';
 
 type ReportNavigationProp = StackNavigationProp<RootStackParamList, 'Report'>;
 type ReportRouteProp = RouteProp<RootStackParamList, 'Report'>;
@@ -29,39 +45,16 @@ export default function CountScreen({ navigation, route }: ReportProps) {
     route.params;
 
   const dispatch = useAppDispatch();
-  const { stdCellList, customCellList } = useAppSelector((state) => state.user);
+  const { reviewed } = useAppSelector((state) => state.user);
 
-  const [cellList, setCellList] = useState([] as Cell[]);
-
-  useEffect(() => {
-    if (customCellList != null && customCellList.length > 0) {
-      const sortedCustomList = [...customCellList].sort((a, b) => {
-        if (a.order > b.order) {
-          return 1;
-        } else if (a.order < b.order) {
-          return -1;
-        }
-        return 0;
-      });
-      setCellList(sortedCustomList);
-    } else {
-      const sortedStdList = [...stdCellList].sort((a, b) => {
-        if (a.order > b.order) {
-          return 1;
-        } else if (a.order < b.order) {
-          return -1;
-        }
-        return 0;
-      });
-      setCellList(sortedStdList);
-    }
-  }, [customCellList]);
+  const printRef = useRef(null);
 
   const goBack = () => {
     navigation.goBack();
   };
 
   const handleBackButton = () => {
+    goBack();
     return true; // OVERRIDE BACK BUTTON EVENTO PADRAO
   };
 
@@ -75,15 +68,60 @@ export default function CountScreen({ navigation, route }: ReportProps) {
     };
   });
 
+  const shareApp = () => {
+    Share.share({
+      message: report.shareMsg,
+    });
+  };
+
+  const shareImage = () => {
+    printRef.current.capture().then(async (uri: string) => {
+      const available = await Sharing.isAvailableAsync();
+      if (available) {
+        await Sharing.shareAsync(uri, {
+          mimeType: 'image/jpeg',
+          dialogTitle: report.shareMsg,
+        });
+      }
+    });
+  };
+
+  const onPressShare = () => {
+    dispatch(setShareOptionsHandleApp(shareApp));
+    dispatch(setShareOptionsHandleImage(shareImage));
+    dispatch(setShareOptionsVisible(true));
+  };
+
   const onConfirmEnd = () => {
     navigation.navigate('Main');
   };
 
+  const onConfirmReview = () => {
+    dispatch(setUserReviewed(true));
+    if (Platform.OS === 'android') {
+      Linking.openURL(
+        `market://details?id=${constantsUtils.packageName}&showAllReviews=true`
+      );
+    } else {
+      Linking.openURL(
+        `itms-apps://itunes.apple.com/app/viewContentsUserReviews/id${constantsUtils.itunesItemId}?action=write-review`
+      );
+    }
+  };
+
   const onPressEndCount = () => {
-    dispatch(setConfirmTitle(report.endTitle));
-    dispatch(setConfirmMessage(report.endMsg));
-    dispatch(setConfirmHandleConfirm(onConfirmEnd));
-    dispatch(setConfirmVisible(true));
+    if (reviewed) {
+      dispatch(setConfirmTitle(report.endTitle));
+      dispatch(setConfirmMessage(report.endMsg));
+      dispatch(setConfirmHandleConfirm(onConfirmEnd));
+      dispatch(setConfirmVisible(true));
+    } else {
+      dispatch(setConfirmTitle(report.reviewTitle));
+      dispatch(setConfirmMessage(report.reviewMsg));
+      dispatch(setConfirmHandleConfirm(onConfirmReview));
+      dispatch(setConfirmVisible(true));
+      navigation.navigate('Main');
+    }
   };
 
   const styles = StyleSheet.create({
@@ -132,14 +170,12 @@ export default function CountScreen({ navigation, route }: ReportProps) {
       lineHeight: 20,
       textAlign: 'left',
       fontFamily: Fonts.Inter_700Bold,
-      color: colorsStyle.absolutes.black,
     },
     headerText: {
       fontSize: 16,
       lineHeight: 20,
       textAlign: 'center',
       fontFamily: Fonts.Inter_700Bold,
-      color: colorsStyle.absolutes.black,
     },
     cellNameContainer: {
       width: 172,
@@ -174,111 +210,121 @@ export default function CountScreen({ navigation, route }: ReportProps) {
       fontFamily: Fonts.Inter_700Bold,
       color: colorsStyle.greys[2],
     },
+    printView: {
+      backgroundColor: colorsStyle.absolutes.white,
+    },
   });
 
   return (
     <>
       <View style={styles.container}>
-        <Header title={report.title} onPressBack={goBack} icon="share" />
+        <Header
+          title={report.title}
+          onPressBack={goBack}
+          icon="share"
+          onPressIcon={onPressShare}
+        />
         <ScrollView overScrollMode="never">
-          <View style={styles.headerSpace} />
-          <View style={styles.rowContainer}>
-            <View style={styles.mainDataContainer}>
-              <Text
-                style={styles.mainData}
-                numberOfLines={2}
-                ellipsizeMode="tail"
-              >
-                {report.leu}
-              </Text>
-            </View>
-            <View style={styles.dataContainer}>
-              <Text style={styles.data}>
-                {leu}
-                {' (céls/µL)'}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.rowContainer}>
-            <View style={styles.mainDataContainer}>
-              <Text
-                style={styles.mainData}
-                numberOfLines={2}
-                ellipsizeMode="tail"
-              >
-                {report.erit}
-              </Text>
-            </View>
-            <View style={styles.dataContainer}>
-              <Text style={styles.data}>{eritCount}</Text>
-            </View>
-          </View>
-          <View style={styles.rowContainer}>
-            <View style={styles.mainDataContainer}>
-              <Text
-                style={styles.mainData}
-                numberOfLines={2}
-                ellipsizeMode="tail"
-              >
-                {report.global}
-              </Text>
-            </View>
-            <View style={styles.dataContainer}>
-              <Text style={styles.data}>{globalCount}</Text>
-            </View>
-          </View>
-          <View style={styles.rowContainer} />
-          <View style={styles.headerRowContainer}>
-            <View style={styles.cellNameContainer}>
-              <Text style={styles.leftHeaderText}>{report.diff}</Text>
-            </View>
-            <View style={styles.cellRelativeContainer}>
-              <Text style={styles.headerText}>{report.relative}</Text>
-            </View>
-            <View style={styles.cellAbsoluteContainer}>
-              <Text style={styles.headerText}>{report.absolute}</Text>
-            </View>
-          </View>
-          {cellResultList.map((cell) => (
-            <View key={cell.order} style={styles.rowContainer}>
-              <View style={styles.cellNameContainer}>
+          <ViewShot style={styles.printView} ref={printRef}>
+            <View style={styles.headerSpace} />
+            <View style={styles.rowContainer}>
+              <View style={styles.mainDataContainer}>
                 <Text
                   style={styles.mainData}
-                  numberOfLines={1}
+                  numberOfLines={2}
                   ellipsizeMode="tail"
                 >
-                  {cell.name}
+                  {report.leu}
                 </Text>
               </View>
+              <View style={styles.dataContainer}>
+                <Text style={styles.data}>
+                  {leu}
+                  {' (céls/µL)'}
+                </Text>
+              </View>
+            </View>
+            <View style={styles.rowContainer}>
+              <View style={styles.mainDataContainer}>
+                <Text
+                  style={styles.mainData}
+                  numberOfLines={2}
+                  ellipsizeMode="tail"
+                >
+                  {report.erit}
+                </Text>
+              </View>
+              <View style={styles.dataContainer}>
+                <Text style={styles.data}>{eritCount}</Text>
+              </View>
+            </View>
+            <View style={styles.rowContainer}>
+              <View style={styles.mainDataContainer}>
+                <Text
+                  style={styles.mainData}
+                  numberOfLines={2}
+                  ellipsizeMode="tail"
+                >
+                  {report.global}
+                </Text>
+              </View>
+              <View style={styles.dataContainer}>
+                <Text style={styles.data}>{globalCount}</Text>
+              </View>
+            </View>
+            <View style={styles.rowContainer} />
+            <View style={styles.headerRowContainer}>
+              <View style={styles.cellNameContainer}>
+                <Text style={styles.leftHeaderText}>{report.diff}</Text>
+              </View>
               <View style={styles.cellRelativeContainer}>
-                <Text style={styles.data}>{cell.relative}</Text>
+                <Text style={styles.headerText}>{report.relative}</Text>
               </View>
               <View style={styles.cellAbsoluteContainer}>
-                <Text style={styles.data}>{cell.absolute}</Text>
+                <Text style={styles.headerText}>{report.absolute}</Text>
               </View>
             </View>
-          ))}
-          <View style={styles.footerSpace} />
-          <View style={styles.footerRowContainer}>
-            <View style={styles.cellNameContainer}>
-              <Text style={styles.leftHeaderText}>{report.total}</Text>
+            {cellResultList.map((cell) => (
+              <View key={cell.order} style={styles.rowContainer}>
+                <View style={styles.cellNameContainer}>
+                  <Text
+                    style={styles.mainData}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {cell.name}
+                  </Text>
+                </View>
+                <View style={styles.cellRelativeContainer}>
+                  <Text style={styles.data}>{cell.relative}</Text>
+                </View>
+                <View style={styles.cellAbsoluteContainer}>
+                  <Text style={styles.data}>{cell.absolute}</Text>
+                </View>
+              </View>
+            ))}
+            <View style={styles.footerSpace} />
+            <View style={styles.footerRowContainer}>
+              <View style={styles.cellNameContainer}>
+                <Text style={styles.leftHeaderText}>{report.total}</Text>
+              </View>
+              <View style={styles.cellRelativeContainer}>
+                <Text style={styles.headerText}>100</Text>
+              </View>
+              <View style={styles.cellAbsoluteContainer}>
+                <Text style={styles.headerText}>{globalCount}</Text>
+              </View>
             </View>
-            <View style={styles.cellRelativeContainer}>
-              <Text style={styles.headerText}>100</Text>
+            <View style={styles.headerSpace} />
+            <View style={styles.rowContainer}>
+              <View style={styles.mainDataContainer}>
+                <Text style={styles.footerData}>
+                  {report.count.replace('{{count}}', maxCount.value.toString())}
+                </Text>
+              </View>
             </View>
-            <View style={styles.cellAbsoluteContainer}>
-              <Text style={styles.headerText}>{globalCount}</Text>
-            </View>
-          </View>
-          <View style={styles.headerSpace} />
-          <View style={styles.rowContainer}>
-            <View style={styles.mainDataContainer}>
-              <Text style={styles.footerData}>
-                {report.count.replace('{{count}}', maxCount.value.toString())}
-              </Text>
-            </View>
-          </View>
-          <View style={styles.headerSpace} />
+            <View style={styles.headerSpace} />
+          </ViewShot>
         </ScrollView>
       </View>
       <Footer>

@@ -1,4 +1,5 @@
 import { LanguageType } from './types.language';
+import constantsUtils from '../utils/constants.utils';
 
 export const ptBR: LanguageType = {
   main: {
@@ -71,6 +72,15 @@ export const ptBR: LanguageType = {
     total: 'Total',
     count:
       '* Para obtenção do diferencial de Leucócitos foi considerada a contagem de {{count}} células.',
+    shareMsg: `Eu encontrei o melhor contador hematológico! Confere lá.\n${constantsUtils.onelink}`,
+    reviewTitle: 'Gostaria de avaliar o aplicativo?',
+    reviewMsg: 'Conte-nos o que achou do contador. Adoraríamos o seu feedback!',
+  },
+  shareOptions: {
+    app: 'Recomendar app',
+    image: 'Imagem',
+    pdf: 'PDF',
+    excel: 'Planilha Excel',
   },
 };
 

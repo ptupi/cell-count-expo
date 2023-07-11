@@ -16,6 +16,7 @@ interface UserState {
   welcome: boolean;
   stdCellList: Cell[];
   customCellList: Cell[];
+  reviewed: boolean;
 }
 
 const initialState: UserState = {
@@ -84,6 +85,7 @@ const initialState: UserState = {
     },
   ],
   customCellList: [],
+  reviewed: false,
 };
 
 export const userSlice = createSlice({
@@ -96,8 +98,12 @@ export const userSlice = createSlice({
     setCustomCellList: (state, action: PayloadAction<Cell[]>) => {
       state.customCellList = action.payload;
     },
+    setUserReviewed: (state, action: PayloadAction<boolean>) => {
+      state.reviewed = action.payload;
+    },
   },
 });
 
-export const { setUserWelcome, setCustomCellList } = userSlice.actions;
+export const { setUserWelcome, setCustomCellList, setUserReviewed } =
+  userSlice.actions;
 export default userSlice.reducer;

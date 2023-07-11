@@ -74,6 +74,16 @@ type ReportType = {
   absolute: string;
   total: string;
   count: string;
+  shareMsg: string;
+  reviewTitle: string;
+  reviewMsg: string;
+};
+
+type ModalShareOptionsType = {
+  app: string;
+  image: string;
+  pdf: string;
+  excel: string;
 };
 
 export type LanguageType = {
@@ -85,4 +95,5 @@ export type LanguageType = {
   countSetup: CountSetupType;
   count: CountType;
   report: ReportType;
+  shareOptions: ModalShareOptionsType;
 };

@@ -122,18 +122,19 @@ export default function CountScreen({ navigation, route }: CountProps) {
         ).length;
         cellResultList.push({
           ...element,
-          relative: ((cellCount / Number(maxCount.value)) * 100).toFixed(2),
-          absolute: (
-            globalCount *
-            (cellCount / Number(maxCount.value))
-          ).toFixed(2),
+          relative: ((cellCount / Number(maxCount.value)) * 100)
+            .toFixed(2)
+            .replace('.00', ''),
+          absolute: (globalCount * (cellCount / Number(maxCount.value)))
+            .toFixed(2)
+            .replace('.00', ''),
         });
       });
     navigation.navigate('Report', {
       maxCount,
       leu,
       eritCount,
-      globalCount,
+      globalCount: globalCount.toFixed(2).replace('.00', ''),
       cellResultList: cellResultList.sort((a, b) => {
         if (a.order > b.order) {
           return 1;

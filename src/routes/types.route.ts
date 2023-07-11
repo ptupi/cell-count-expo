@@ -16,7 +16,7 @@ export type RootStackParamList = {
     maxCount: PickerOption;
     leu: number;
     eritCount: number;
-    globalCount: number;
+    globalCount: string | number;
     cellResultList: CellResult[];
   };
 };

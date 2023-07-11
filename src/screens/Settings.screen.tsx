@@ -24,6 +24,7 @@ import {
   setAlertTitle,
   setAlertVisible,
 } from '../redux/reducers/alertReducer';
+import { setUserReviewed } from '../redux/reducers/userReducer';
 
 type SettingsNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -52,6 +53,7 @@ export default function SettingsScreen({ navigation }: SettingsProps) {
   };
 
   const onPressReview = async () => {
+    dispatch(setUserReviewed(true));
     if (Platform.OS === 'android') {
       Linking.openURL(
         `market://details?id=${constantsUtils.packageName}&showAllReviews=true`

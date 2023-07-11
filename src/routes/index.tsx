@@ -10,6 +10,7 @@ import { setAlertVisible } from '../redux/reducers/alertReducer';
 import { setConfirmVisible } from '../redux/reducers/confirmReducer';
 import ModalAlert from '../components/ModalAlert.component';
 import ModalConfirm from '../components/ModalConfirm.component';
+import ModalShareOptions from '../components/ModalShareOptions.component';
 import { RootStackParamList } from './types.route';
 import MainScreen from '../screens/Main.screen';
 import SettingsScreen from '../screens/Settings.screen';
@@ -19,6 +20,7 @@ import NewCellScreen from '../screens/NewCell.screen';
 import CountSetupScreen from '../screens/CountSetup.screen';
 import CountScreen from '../screens/Count.screen';
 import ReportScreen from '../screens/Report.screen';
+import { setShareOptionsVisible } from '../redux/reducers/shareOptionsReducer';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -146,6 +148,11 @@ export default function Navigation() {
     message: confirmMessage,
     handleConfirm,
   } = useAppSelector((state) => state.confirm);
+  const {
+    visible: shareOptionsVisible,
+    handleApp,
+    handleImage,
+  } = useAppSelector((state) => state.shareOptions);
 
   const dispatch = useAppDispatch();
 
@@ -170,6 +177,14 @@ export default function Navigation() {
         title={confirmTitle}
         message={confirmMessage}
         handleConfirm={handleConfirm}
+      />
+      <ModalShareOptions
+        visible={shareOptionsVisible}
+        setVisible={(status: React.SetStateAction<boolean>) => {
+          dispatch(setShareOptionsVisible(Boolean(status)));
+        }}
+        handleApp={handleApp}
+        handleImage={handleImage}
       />
     </>
   );
