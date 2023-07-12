@@ -7,6 +7,21 @@
 [![EXPO](https://img.shields.io/badge/expo@^48.0.0-white)](https://docs.expo.dev/get-started/installation/)  
 [![TYPESCRIPT](https://img.shields.io/badge/language-typescript-informational)](https://docs.expo.dev/guides/typescript/)
 
+## Setup
+
+- yarn install
+
+## Run Expo Go
+
+- yarn start
+
+## Run Dev Client (with built apk)
+
+- yarn build:dev (this will build .apk file)
+- Install apk on device/emulator
+- yarn dev
+- Open generated QR code on terminal
+
 ## Build
 
 ```bash

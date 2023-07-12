@@ -152,6 +152,8 @@ export default function Navigation() {
     visible: shareOptionsVisible,
     handleApp,
     handleImage,
+    handlePdf,
+    handleExcel,
   } = useAppSelector((state) => state.shareOptions);
 
   const dispatch = useAppDispatch();
@@ -185,6 +187,8 @@ export default function Navigation() {
         }}
         handleApp={handleApp}
         handleImage={handleImage}
+        handlePdf={handlePdf}
+        handleExcel={handleExcel}
       />
     </>
   );

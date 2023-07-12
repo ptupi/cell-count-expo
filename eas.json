@@ -1,0 +1,32 @@
+{
+  "cli": {
+    "version": ">= 3.15.0"
+  },
+  "build": {
+    "production": {
+      "android": {
+        "autoIncrement": "versionCode",
+        "buildType": "app-bundle"
+      },
+      "ios": {
+        "autoIncrement": "buildNumber"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      }
+    },
+    "development": {
+      "developmentClient": true,
+      "android": {
+        "buildType": "apk"
+      },
+      "distribution": "internal"
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

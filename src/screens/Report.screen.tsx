@@ -12,6 +12,10 @@ import { RouteProp, useFocusEffect } from '@react-navigation/native';
 import ViewShot from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import * as Linking from 'expo-linking';
+import * as Print from 'expo-print';
+// import * as FileSystem from 'expo-file-system';
+// import ExcelJS from 'exceljs';
+// import { Buffer as NodeBuffer } from 'buffer';
 
 import { language } from '../languages';
 import { RootStackParamList } from '../routes/types.route';
@@ -29,7 +33,9 @@ import {
 import Text, { Fonts } from '../components/Text.component';
 import {
   setShareOptionsHandleApp,
+  setShareOptionsHandleExcel,
   setShareOptionsHandleImage,
+  setShareOptionsHandlePdf,
   setShareOptionsVisible,
 } from '../redux/reducers/shareOptionsReducer';
 import constantsUtils from '../utils/constants.utils';
@@ -86,9 +92,193 @@ export default function CountScreen({ navigation, route }: ReportProps) {
     });
   };
 
+  const sharePdf = async () => {
+    let rows = '';
+    cellResultList.forEach((cell) => {
+      rows = rows.concat(
+        `<tr>
+          <td>${cell.name}</td>
+          <td>${cell.relative}</td>
+          <td>${cell.absolute}</td>
+        </tr>`
+      );
+    });
+    const html = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Diferencial de Leucócitos</title>
+          <style>
+            table {
+              border-collapse: collapse;
+              width: 100%;
+            }
+      
+            th,
+            td {
+              text-align: left;
+              padding: 8px;
+              border-bottom: 1px solid #ddd;
+            }
+      
+            th {
+              background-color: #f2f2f2;
+            }
+      
+            .header {
+              font-size: 24px;
+              font-weight: bold;
+              margin-bottom: 16px;
+            }
+      
+            .flex-row {
+              display: flex;
+              flex-direction: row;
+              margin-bottom: 10px;
+            }
+      
+            .flex-row-last {
+              display: flex;
+              flex-direction: row;
+              margin-bottom: 20px;
+            }
+      
+            .column {
+              flex-basis: 30%;
+            }
+      
+            .footer {
+              margin-top: 20px;
+              text-align: left;
+            }
+      
+            .footer-right {
+              position: absolute;
+              bottom: 0;
+              right: 0;
+              left: 0;
+              padding: 10px;
+              background-color: #f2f2f2;
+              text-align: right;
+            }
+
+            .total-row {
+              font-weight: bold;
+            }
+          </style>
+        </head>
+        <body>
+          <h1 class="header">Diferencial de Leucócitos</h1>
+          <div class="flex-row">
+            <div class="column">Leucócitos totais</div>
+            <div class="column">${leu} (céls/μL)</div>
+          </div>
+          <div class="flex-row">
+            <div class="column">Eritroblastos</div>
+            <div class="column">${eritCount}</div>
+          </div>
+          <div class="flex-row-last">
+            <div class="column">Contagem global corrigida</div>
+            <div class="column">${globalCount}</div>
+          </div>
+          <table>
+            <tr>
+              <th>Leucometria diferencial</th>
+              <th>Relativa (%)</th>
+              <th>Absoluta (céls/μL)</th>
+            </tr>
+            ${rows}
+            <tr class="total-row">
+              <td>Total</td>
+              <td>100</td>
+              <td>${globalCount}</td>
+            </tr>
+          </table>
+          <div class="footer">
+            Este documento foi gerado pelo aplicativo Contador Celular Multi
+            Espécie<br /><a href="${constantsUtils.onelink}">Baixe aqui</a>
+          </div>
+          <div class="footer-right">@ ${new Date().getFullYear()} mappe Ltda</div>
+        </body>
+      </html>
+    `;
+    const { uri } = await Print.printToFileAsync({ html });
+    await Sharing.shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
+  };
+
+  // const generateShareableExcel = async (): Promise<string> => {
+  //   const now = new Date();
+  //   const fileName = 'diferencial.xlsx';
+  //   const fileUri = FileSystem.cacheDirectory + fileName;
+  //   return new Promise<string>((resolve, reject) => {
+  //     const workbook = new ExcelJS.Workbook();
+  //     workbook.creator = 'Me';
+  //     workbook.created = now;
+  //     workbook.modified = now;
+  //     // Add a sheet to work on
+  //     const worksheet = workbook.addWorksheet('Diferencial', {});
+  //     // Just some columns as used on ExcelJS Readme
+  //     worksheet.columns = [
+  //       { header: report.diff, key: 'leu', width: 64 },
+  //       { header: report.relative, key: 'relative', width: 32 },
+  //       { header: report.absolute, key: 'absolute', width: 32 },
+  //     ];
+  //     // Add some test data
+  //     cellResultList.forEach((cell) => {
+  //       worksheet.addRow({
+  //         leu: cell.name,
+  //         relative: cell.relative,
+  //         absolute: cell.absolute,
+  //       });
+  //     });
+  //     // Test styling
+  //     // Style first row
+  //     worksheet.getRow(1).font = {
+  //       name: 'Arial Black',
+  //       family: 4,
+  //       size: 16,
+  //       bold: true,
+  //     };
+  //     // Style second column
+  //     worksheet.eachRow((row, rowNumber) => {
+  //       row.font = {
+  //         name: 'Arial Black',
+  //         family: 2,
+  //         size: 14,
+  //       };
+  //     });
+  //     // Write to file
+  //     workbook.xlsx.writeBuffer().then((buffer: ExcelJS.Buffer) => {
+  //       // Do this to use base64 encoding
+  //       const nodeBuffer = NodeBuffer.from(buffer);
+  //       const bufferStr = nodeBuffer.toString('base64');
+  //       FileSystem.writeAsStringAsync(fileUri, bufferStr, {
+  //         encoding: FileSystem.EncodingType.Base64,
+  //       }).then(() => {
+  //         resolve(fileUri);
+  //       });
+  //     });
+  //   });
+  // };
+
+  const shareExcel = async () => {
+    // const available = await Sharing.isAvailableAsync();
+    // if (available) {
+    //   const shareableExcelUri: string = await generateShareableExcel();
+    //   await Sharing.shareAsync(shareableExcelUri, {
+    //     mimeType:
+    //       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // Android
+    //     dialogTitle: report.shareMsg, // Android and Web
+    //     UTI: 'com.microsoft.excel.xlsx', // iOS
+    //   });
+    // }
+  };
+
   const onPressShare = () => {
     dispatch(setShareOptionsHandleApp(shareApp));
     dispatch(setShareOptionsHandleImage(shareImage));
+    dispatch(setShareOptionsHandlePdf(sharePdf));
+    dispatch(setShareOptionsHandleExcel(shareExcel));
     dispatch(setShareOptionsVisible(true));
   };
 

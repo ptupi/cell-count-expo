@@ -2,6 +2,7 @@
   "expo": {
     "name": "cell-count-expo",
     "slug": "cell-count-expo",
+    "owner": "ptupi",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,14 +19,18 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mappe.cellcount"
+      "bundleIdentifier": "com.mappe.cellcount",
+      "requireFullScreen": true,
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.mappe.cellcount"
+      "package": "com.mappe.cellcount",
+      "versionCode": 1,
+      "allowBackup": false
     },
     "web": {
       "favicon": "./assets/favicon.png"

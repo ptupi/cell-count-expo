@@ -12,12 +12,21 @@ interface ModalShareOptionsProps {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
   handleApp: () => void;
   handleImage: () => void;
+  handlePdf: () => void;
+  handleExcel: () => void;
 }
 
 function ModalShareOptions(props: ModalShareOptionsProps) {
   const { shareOptions } = language;
 
-  const { visible, setVisible, handleImage, handleApp } = props;
+  const {
+    visible,
+    setVisible,
+    handleApp,
+    handleImage,
+    handlePdf,
+    handleExcel,
+  } = props;
 
   const handleClose = () => {
     setVisible(false);
@@ -33,8 +42,10 @@ function ModalShareOptions(props: ModalShareOptionsProps) {
         handleImage();
         break;
       case 'pdf':
+        handlePdf();
         break;
       case 'exc':
+        handleExcel();
         break;
       default:
         break;
