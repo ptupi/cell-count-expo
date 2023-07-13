@@ -156,7 +156,7 @@ function ModalShareOptions(props: ModalShareOptionsProps) {
               <Text style={styles.optionText}>{shareOptions.pdf}</Text>
             </View>
           </Pressable>
-          <Pressable
+          {/* <Pressable
             style={styles.optionContainer}
             onPress={() => onPressOption('exc')}
           >
@@ -168,7 +168,7 @@ function ModalShareOptions(props: ModalShareOptionsProps) {
             <View style={styles.optionTextContainer}>
               <Text style={styles.optionText}>{shareOptions.excel}</Text>
             </View>
-          </Pressable>
+          </Pressable> */}
         </View>
       </View>
     </Modal>

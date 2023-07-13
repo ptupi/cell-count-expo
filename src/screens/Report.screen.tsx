@@ -13,9 +13,6 @@ import ViewShot from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import * as Linking from 'expo-linking';
 import * as Print from 'expo-print';
-// import * as FileSystem from 'expo-file-system';
-// import ExcelJS from 'exceljs';
-// import { Buffer as NodeBuffer } from 'buffer';
 
 import { language } from '../languages';
 import { RootStackParamList } from '../routes/types.route';
@@ -195,6 +192,11 @@ export default function CountScreen({ navigation, route }: ReportProps) {
             </tr>
           </table>
           <div class="footer">
+            * Para obtenção do diferencial de Leucócitos foi considerada a contagem de ${
+              maxCount.value
+            } células.
+          </div>
+          <div class="footer">
             Este documento foi gerado pelo aplicativo Contador Celular Multi
             Espécie<br /><a href="${constantsUtils.onelink}">Baixe aqui</a>
           </div>
@@ -206,73 +208,7 @@ export default function CountScreen({ navigation, route }: ReportProps) {
     await Sharing.shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
   };
 
-  // const generateShareableExcel = async (): Promise<string> => {
-  //   const now = new Date();
-  //   const fileName = 'diferencial.xlsx';
-  //   const fileUri = FileSystem.cacheDirectory + fileName;
-  //   return new Promise<string>((resolve, reject) => {
-  //     const workbook = new ExcelJS.Workbook();
-  //     workbook.creator = 'Me';
-  //     workbook.created = now;
-  //     workbook.modified = now;
-  //     // Add a sheet to work on
-  //     const worksheet = workbook.addWorksheet('Diferencial', {});
-  //     // Just some columns as used on ExcelJS Readme
-  //     worksheet.columns = [
-  //       { header: report.diff, key: 'leu', width: 64 },
-  //       { header: report.relative, key: 'relative', width: 32 },
-  //       { header: report.absolute, key: 'absolute', width: 32 },
-  //     ];
-  //     // Add some test data
-  //     cellResultList.forEach((cell) => {
-  //       worksheet.addRow({
-  //         leu: cell.name,
-  //         relative: cell.relative,
-  //         absolute: cell.absolute,
-  //       });
-  //     });
-  //     // Test styling
-  //     // Style first row
-  //     worksheet.getRow(1).font = {
-  //       name: 'Arial Black',
-  //       family: 4,
-  //       size: 16,
-  //       bold: true,
-  //     };
-  //     // Style second column
-  //     worksheet.eachRow((row, rowNumber) => {
-  //       row.font = {
-  //         name: 'Arial Black',
-  //         family: 2,
-  //         size: 14,
-  //       };
-  //     });
-  //     // Write to file
-  //     workbook.xlsx.writeBuffer().then((buffer: ExcelJS.Buffer) => {
-  //       // Do this to use base64 encoding
-  //       const nodeBuffer = NodeBuffer.from(buffer);
-  //       const bufferStr = nodeBuffer.toString('base64');
-  //       FileSystem.writeAsStringAsync(fileUri, bufferStr, {
-  //         encoding: FileSystem.EncodingType.Base64,
-  //       }).then(() => {
-  //         resolve(fileUri);
-  //       });
-  //     });
-  //   });
-  // };
-
-  const shareExcel = async () => {
-    // const available = await Sharing.isAvailableAsync();
-    // if (available) {
-    //   const shareableExcelUri: string = await generateShareableExcel();
-    //   await Sharing.shareAsync(shareableExcelUri, {
-    //     mimeType:
-    //       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // Android
-    //     dialogTitle: report.shareMsg, // Android and Web
-    //     UTI: 'com.microsoft.excel.xlsx', // iOS
-    //   });
-    // }
-  };
+  const shareExcel = () => {};
 
   const onPressShare = () => {
     dispatch(setShareOptionsHandleApp(shareApp));
