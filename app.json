@@ -16,7 +16,9 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/153b3c1a-1598-4f62-aacb-f42a87b4864e"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mappe.cellcount",
@@ -25,8 +27,13 @@
     },
     "android": {
       "package": "com.mappe.cellcount",
-      "versionCode": 8,
+      "versionCode": 9,
       "allowBackup": false
+    },
+    "androidStatusBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#FFF",
+      "translucent": false
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
