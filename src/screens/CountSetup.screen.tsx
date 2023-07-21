@@ -13,7 +13,6 @@ import { language } from '../languages';
 import { RootStackParamList } from '../routes/types.route';
 import colorsStyle from '../styles/colors.style';
 import Header from '../components/Header.component';
-import { useAppDispatch } from '../redux';
 import Text, { Fonts } from '../components/Text.component';
 import Picker, { PickerOption } from '../components/Picker.component';
 import Footer from '../components/Footer.component';
@@ -87,8 +86,6 @@ export default function CountSetupScreen({ navigation }: CountSetupProps) {
   ];
 
   const { countSetup } = language;
-
-  const dispatch = useAppDispatch();
 
   const [maxCountVisible, setMaxCountVisible] = useState(false);
   const [maxCount, setMaxCount] = useState(null as PickerOption);

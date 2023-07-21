@@ -65,8 +65,10 @@ const TextInput = (props: CustomInputProps & TextInputProps) => {
         <Pressable
           style={styles.iconContainer}
           onPress={() => {
-            setValue('');
             Keyboard.dismiss();
+            if (!Keyboard.isVisible()) {
+              setValue('');
+            }
           }}
         >
           <MaterialIcons name="close" color={colorsStyle.icons} size={24} />

@@ -8,7 +8,10 @@
     "ios": "npx expo start --ios",
     "web": "npx expo start --web",
     "dev": "npx expo start --dev-client",
-    "build:dev": "npx eas-cli build --platform android --profile development"
+    "build:dev": "npx eas-cli build --platform android --profile development",
+    "build:android": "npx eas-cli build --platform android --profile production",
+    "build:ios": "npx eas-cli build --platform ios --profile production",
+    "upload:ios": "npx eas-cli submit -p ios"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.2",
