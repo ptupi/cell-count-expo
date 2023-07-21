@@ -76,12 +76,9 @@ function ModalShareOptions(props: ModalShareOptionsProps) {
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
       shadowColor: colorsStyle.absolutes.black,
-      shadowOpacity: 0.15,
-      shadowRadius: 10,
-      shadowOffset: {
-        height: 0,
-        width: 2,
-      },
+      shadowOffset: { width: -2, height: 4 },
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
       elevation: 3,
     },
     optionContainer: {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, ViewProps } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
 import colorsStyle from '../styles/colors.style';

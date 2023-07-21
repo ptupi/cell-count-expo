@@ -4,6 +4,7 @@ import {
   StyleSheet,
   View,
   TextInput as TextInputReactNative,
+  Keyboard,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useFocusEffect } from '@react-navigation/native';
@@ -155,12 +156,19 @@ export default function CountSetupScreen({ navigation }: CountSetupProps) {
         />
         <TextInput
           componentRef={leuRef}
+          placeholder={countSetup.totalLeu}
           value={leu}
           setValue={(value: string) => {
             setLeu(maskOnlyNumbers(value));
           }}
           keyboardType="number-pad"
-          placeholder={countSetup.totalLeu}
+          returnKeyType="done"
+          maxLength={8}
+          blurOnSubmit
+          onEndEditing={() => {
+            Keyboard.dismiss();
+          }}
+          close
         />
       </View>
       <Footer>
