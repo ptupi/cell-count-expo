@@ -7,18 +7,20 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { language } from '../languages';
 import { RootStackParamList } from '../routes/types.route';
-import colorsStyle from '../styles/colors.style';
 import Text, { Fonts } from '../components/Text.component';
 import Pressable from '../components/Pressable.component';
 import MainOption, {
   MainOptionProps,
 } from '../components/MainOption.component';
+import { useColors } from '../hooks/useColors';
 
 type MainNavigationProp = StackNavigationProp<RootStackParamList, 'Main'>;
 type MainProps = { navigation: MainNavigationProp };
 
 export default function MainScreen({ navigation }: MainProps) {
   const { main } = language;
+
+  const colors = useColors();
 
   const onPressCellCount = () => {
     navigation.navigate('CountSetup');
@@ -68,7 +70,7 @@ export default function MainScreen({ navigation }: MainProps) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
     },
     headerContainer: {
       marginTop: 20,
@@ -105,7 +107,7 @@ export default function MainScreen({ navigation }: MainProps) {
       height: 36,
       width: 36,
       borderRadius: 18,
-      backgroundColor: colorsStyle.opacity.red25,
+      backgroundColor: colors.screen.main.iconContainer,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -132,14 +134,17 @@ export default function MainScreen({ navigation }: MainProps) {
           <Pressable style={styles.iconContainer} onPress={onPressSettings}>
             <MaterialIcons
               name="settings"
-              color={colorsStyle.absolutes.black}
+              color={colors.screen.main.icon}
               size={24}
             />
           </Pressable>
         </View>
       </View>
       <LinearGradient
-        colors={[colorsStyle.absolutes.white, colorsStyle.absolutes.red]}
+        colors={[
+          colors.component.gradient.gradientStart,
+          colors.component.gradient.gradientEnd,
+        ]}
         style={styles.headerGradient}
         start={{ x: 0.0, y: 0.0 }}
         end={{ x: 1.0, y: 1.0 }}

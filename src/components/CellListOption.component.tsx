@@ -7,10 +7,10 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import colorsStyle from '../styles/colors.style';
 import Pressable from './Pressable.component';
 import Text, { Fonts } from './Text.component';
 import { Cell } from '../redux/reducers/userReducer';
+import { useColors } from '../hooks/useColors';
 
 export type CellListOptionProps = {
   cell: Cell;
@@ -22,6 +22,8 @@ export type CellListOptionProps = {
 
 const CellListOption = (props: CellListOptionProps) => {
   const { cell, open, onPress, onPressEdit, onPressDelete } = props;
+
+  const colors = useColors();
 
   const dotsRotation = useSharedValue(0);
   const animatedDotsRotation = useAnimatedStyle(() => ({
@@ -52,13 +54,13 @@ const CellListOption = (props: CellListOptionProps) => {
       justifyContent: 'flex-start',
       alignItems: 'center',
       borderRadius: 16,
-      shadowColor: colorsStyle.absolutes.black,
+      shadowColor: colors.screen.shadow,
       shadowOffset: { width: -2, height: 4 },
       shadowOpacity: 0.2,
       shadowRadius: 3,
       elevation: 3,
       overflow: 'hidden',
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.component.cellListOption.background,
       marginHorizontal: 16,
     },
     orderContainer: {
@@ -103,7 +105,7 @@ const CellListOption = (props: CellListOptionProps) => {
       right: 24,
       height: 36,
       width: 36,
-      backgroundColor: colorsStyle.buttons,
+      backgroundColor: colors.component.cellListOption.iconContainer,
       borderRadius: 18,
       justifyContent: 'center',
       alignItems: 'center',
@@ -113,7 +115,7 @@ const CellListOption = (props: CellListOptionProps) => {
       right: 72,
       height: 36,
       width: 36,
-      backgroundColor: colorsStyle.buttons,
+      backgroundColor: colors.component.cellListOption.iconContainer,
       borderRadius: 18,
       justifyContent: 'center',
       alignItems: 'center',
@@ -125,14 +127,14 @@ const CellListOption = (props: CellListOptionProps) => {
       <Pressable style={styles.buttonEdit} onPress={() => onPressEdit(cell)}>
         <MaterialIcons
           name="edit"
-          color={colorsStyle.absolutes.white}
+          color={colors.component.cellListOption.icon}
           size={24}
         />
       </Pressable>
       <Pressable style={styles.button} onPress={() => onPressDelete(cell)}>
         <MaterialIcons
           name="delete-outline"
-          color={colorsStyle.absolutes.white}
+          color={colors.component.cellListOption.icon}
           size={24}
         />
       </Pressable>
@@ -153,7 +155,7 @@ const CellListOption = (props: CellListOptionProps) => {
             <Animated.View style={[styles.iconContainer, animatedDotsRotation]}>
               <MaterialIcons
                 name="more-vert"
-                color={colorsStyle.icons}
+                color={colors.component.cellListOption.iconDot}
                 size={24}
               />
             </Animated.View>

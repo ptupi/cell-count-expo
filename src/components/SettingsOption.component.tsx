@@ -2,9 +2,9 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import colorsStyle from '../styles/colors.style';
 import Pressable from './Pressable.component';
 import Text, { Fonts } from './Text.component';
+import { useColors } from '../hooks/useColors';
 
 export type SettingsOptionProps = {
   name: string;
@@ -14,6 +14,8 @@ export type SettingsOptionProps = {
 
 const SettingsOption = (props: SettingsOptionProps) => {
   const { name, icon, onPress } = props;
+
+  const colors = useColors();
 
   const styles = StyleSheet.create({
     container: {
@@ -46,7 +48,11 @@ const SettingsOption = (props: SettingsOptionProps) => {
   return (
     <Pressable style={styles.container} onPress={onPress}>
       <View style={styles.iconContainer}>
-        <MaterialIcons name={icon} color={colorsStyle.icons} size={18} />
+        <MaterialIcons
+          name={icon}
+          color={colors.component.settingsOption.icon}
+          size={18}
+        />
       </View>
       <View style={styles.nameContainer}>
         <Text style={styles.name}>{name}</Text>

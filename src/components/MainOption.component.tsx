@@ -1,9 +1,9 @@
 import React from 'react';
 import { Image, View, StyleSheet } from 'react-native';
 
-import colorsStyle from '../styles/colors.style';
 import Pressable from './Pressable.component';
 import Text, { Fonts } from './Text.component';
+import { useColors } from '../hooks/useColors';
 
 export type MainOptionProps = {
   name: string;
@@ -15,13 +15,15 @@ export type MainOptionProps = {
 const MainOption = (props: MainOptionProps) => {
   const { name, imageUrl, onPress } = props;
 
+  const colors = useColors();
+
   const styles = StyleSheet.create({
     container: {
       width: 160,
       height: 130,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.component.mainOption.background,
       borderRadius: 8,
-      shadowColor: colorsStyle.absolutes.black,
+      shadowColor: colors.screen.shadow,
       shadowOffset: { width: -2, height: 4 },
       shadowOpacity: 0.2,
       shadowRadius: 3,

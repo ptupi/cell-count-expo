@@ -13,7 +13,6 @@ import * as Haptics from 'expo-haptics';
 
 import { language } from '../languages';
 import { RootStackParamList } from '../routes/types.route';
-import colorsStyle from '../styles/colors.style';
 import Header from '../components/Header.component';
 import { useAppDispatch, useAppSelector } from '../redux';
 import Text, { Fonts } from '../components/Text.component';
@@ -27,6 +26,7 @@ import {
   setConfirmVisible,
 } from '../redux/reducers/confirmReducer';
 import CellCount from '../components/CellCount.component';
+import { useColors } from '../hooks/useColors';
 
 type CountNavigationProp = StackNavigationProp<RootStackParamList, 'Count'>;
 type CountRouteProp = RouteProp<RootStackParamList, 'Count'>;
@@ -38,6 +38,7 @@ export default function CountScreen({ navigation, route }: CountProps) {
 
   const dispatch = useAppDispatch();
   const { stdCellList, customCellList } = useAppSelector((state) => state.user);
+  const colors = useColors();
 
   const [cellList, setCellList] = useState([] as Cell[]);
   const [currentCount, setCurrentCount] = useState([] as Cell[]);
@@ -174,7 +175,7 @@ export default function CountScreen({ navigation, route }: CountProps) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
     },
     desc: {
       marginTop: 16,
@@ -210,22 +211,22 @@ export default function CountScreen({ navigation, route }: CountProps) {
       borderRadius: 29,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colorsStyle.absolutes.white,
-      shadowColor: colorsStyle.absolutes.black,
+      backgroundColor: colors.component.button.primary.active,
+      shadowColor: colors.screen.shadow,
       shadowOffset: { width: -2, height: 4 },
       shadowOpacity: 0.2,
       shadowRadius: 3,
       elevation: 3,
     },
     iconDisabled: {
-      backgroundColor: colorsStyle.greys[3],
+      backgroundColor: colors.component.button.primary.disabled,
     },
     iconText: {
       fontFamily: Fonts.Inter_300Light,
       fontSize: 12,
       lineHeight: 16,
       textAlign: 'center',
-      color: colorsStyle.absolutes.black,
+      color: colors.screen.text,
     },
     textDisabled: {
       opacity: 0.4,
@@ -237,7 +238,7 @@ export default function CountScreen({ navigation, route }: CountProps) {
       fontSize: 16,
       lineHeight: 20,
       textAlign: 'left',
-      color: colorsStyle.absolutes.black,
+      color: colors.screen.text,
     },
     descCell: {
       marginTop: 4,
@@ -246,14 +247,14 @@ export default function CountScreen({ navigation, route }: CountProps) {
       fontSize: 16,
       lineHeight: 20,
       textAlign: 'left',
-      color: colorsStyle.absolutes.black,
+      color: colors.screen.text,
     },
     valueCell: {
       fontFamily: Fonts.Inter_700Bold,
       fontSize: 16,
       lineHeight: 20,
       textAlign: 'left',
-      color: colorsStyle.absolutes.black,
+      color: colors.screen.text,
     },
   });
 
@@ -310,8 +311,8 @@ export default function CountScreen({ navigation, route }: CountProps) {
                       name="restore"
                       color={
                         currentCount.length === 0
-                          ? colorsStyle.greys[2]
-                          : colorsStyle.absolutes.black
+                          ? colors.component.button.primary.disabledText
+                          : colors.component.button.primary.text
                       }
                       size={24}
                     />
@@ -340,8 +341,8 @@ export default function CountScreen({ navigation, route }: CountProps) {
                       name="undo"
                       color={
                         currentCount.length === 0
-                          ? colorsStyle.greys[2]
-                          : colorsStyle.absolutes.black
+                          ? colors.component.button.primary.disabledText
+                          : colors.component.button.primary.text
                       }
                       size={24}
                     />

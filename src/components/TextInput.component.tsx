@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import colorsStyle from '../styles/colors.style';
 import { Fonts } from './Text.component';
 import Pressable from './Pressable.component';
 import { isEmptyString } from '../utils/validator.utils';
+import { useColors } from '../hooks/useColors';
 
 interface CustomInputProps {
   componentRef?: React.Ref<TextInputReactNative>;
@@ -23,6 +23,8 @@ interface CustomInputProps {
 const TextInput = (props: CustomInputProps & TextInputProps) => {
   const { componentRef, value, setValue, style, close } = props;
 
+  const colors = useColors();
+
   const styles = StyleSheet.create({
     container: {
       marginTop: 16,
@@ -33,18 +35,19 @@ const TextInput = (props: CustomInputProps & TextInputProps) => {
     input: {
       flex: 1,
       textAlign: 'left',
-      borderBottomColor: colorsStyle.greys[3],
+      borderBottomColor: colors.component.input.borderBottom,
       borderBottomWidth: 1,
       fontFamily: Fonts.Inter_300Light,
       fontSize: 16,
       lineHeight: 20,
+      color: colors.component.input.text,
     },
     iconContainer: {
       height: 44,
       justifyContent: 'center',
       alignItems: 'center',
       paddingRight: 4,
-      borderBottomColor: colorsStyle.greys[3],
+      borderBottomColor: colors.component.input.borderBottom,
       borderBottomWidth: 1,
     },
   });
@@ -55,9 +58,10 @@ const TextInput = (props: CustomInputProps & TextInputProps) => {
         ref={componentRef}
         value={value}
         onChangeText={setValue}
-        cursorColor={colorsStyle.opacity.black50}
-        selectionColor={colorsStyle.opacity.black50}
-        underlineColorAndroid={colorsStyle.absolutes.transparent}
+        cursorColor={colors.component.input.cursor}
+        selectionColor={colors.component.input.selection}
+        underlineColorAndroid={colors.component.input.underline}
+        placeholderTextColor={colors.component.input.placeholder}
         {...props}
         style={[styles.input, style]}
       />
@@ -71,7 +75,11 @@ const TextInput = (props: CustomInputProps & TextInputProps) => {
             }
           }}
         >
-          <MaterialIcons name="close" color={colorsStyle.icons} size={24} />
+          <MaterialIcons
+            name="close"
+            color={colors.component.input.icon}
+            size={24}
+          />
         </Pressable>
       )}
     </View>

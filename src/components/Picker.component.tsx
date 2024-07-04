@@ -10,9 +10,9 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import colorsStyle from '../styles/colors.style';
 import Pressable from './Pressable.component';
 import Text, { Fonts } from './Text.component';
+import { useColors } from '../hooks/useColors';
 
 export type PickerOption = {
   id: string | number;
@@ -51,6 +51,8 @@ const Picker = (props: PickerProps & ViewProps) => {
     children,
   } = props;
 
+  const colors = useColors();
+
   const handleOpenPicker = () => {
     setVisible(true);
   };
@@ -81,13 +83,13 @@ const Picker = (props: PickerProps & ViewProps) => {
       justifyContent: 'flex-start',
       alignItems: 'center',
       borderRadius: 8,
-      shadowColor: colorsStyle.absolutes.black,
+      shadowColor: colors.screen.shadow,
       shadowOffset: { width: -2, height: 4 },
       shadowOpacity: 0.2,
       shadowRadius: 3,
       elevation: 3,
       overflow: 'hidden',
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.component.picker.background,
       marginHorizontal: 16,
       paddingHorizontal: 4,
     },
@@ -122,16 +124,16 @@ const Picker = (props: PickerProps & ViewProps) => {
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: colorsStyle.opacity.black50,
+      backgroundColor: colors.screen.overlay,
     },
     center: {
       width: '90%',
       maxWidth: 340,
       minHeight: 216,
       maxHeight: '50%',
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
       borderRadius: 8,
-      shadowColor: colorsStyle.absolutes.black,
+      shadowColor: colors.screen.shadow,
       shadowOffset: { width: -2, height: 4 },
       shadowOpacity: 0.2,
       shadowRadius: 3,
@@ -170,7 +172,7 @@ const Picker = (props: PickerProps & ViewProps) => {
       alignItems: 'flex-start',
     },
     selectedPickerItem: {
-      backgroundColor: colorsStyle.opacity.red15,
+      backgroundColor: colors.component.picker.selected,
     },
     pickerItemLabel: {
       fontSize: 18,
@@ -196,7 +198,7 @@ const Picker = (props: PickerProps & ViewProps) => {
           <View style={styles.iconContainer}>
             <MaterialIcons
               name="keyboard-arrow-down"
-              color={colorsStyle.absolutes.black}
+              color={colors.screen.text}
               size={24}
             />
           </View>
@@ -221,13 +223,16 @@ const Picker = (props: PickerProps & ViewProps) => {
               <Pressable style={styles.iconContainer} onPress={handleClose}>
                 <MaterialIcons
                   name="close"
-                  color={colorsStyle.absolutes.black}
+                  color={colors.screen.text}
                   size={24}
                 />
               </Pressable>
             </View>
             <LinearGradient
-              colors={[colorsStyle.absolutes.white, colorsStyle.absolutes.red]}
+              colors={[
+                colors.component.gradient.gradientStart,
+                colors.component.gradient.gradientEnd,
+              ]}
               style={styles.headerGradient}
               start={{ x: 0.0, y: 0.0 }}
               end={{ x: 1.0, y: 1.0 }}

@@ -6,7 +6,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import { language } from '../languages';
 import { RootStackParamList } from '../routes/types.route';
-import colorsStyle from '../styles/colors.style';
 import Header from '../components/Header.component';
 import { useAppDispatch, useAppSelector } from '../redux';
 import CellListOption from '../components/CellListOption.component';
@@ -19,6 +18,7 @@ import {
 } from '../redux/reducers/confirmReducer';
 import Pressable from '../components/Pressable.component';
 import Text, { Fonts } from '../components/Text.component';
+import { useColors } from '../hooks/useColors';
 
 type EditCellsNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -31,6 +31,7 @@ export default function EditCellsScreen({ navigation }: EditCellsProps) {
 
   const dispatch = useAppDispatch();
   const { stdCellList, customCellList } = useAppSelector((state) => state.user);
+  const colors = useColors();
 
   const [cellList, setCellList] = useState([] as Cell[]);
   const [selectedCell, setSelectedCell] = useState({} as Cell);
@@ -139,7 +140,7 @@ export default function EditCellsScreen({ navigation }: EditCellsProps) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
     },
     pressable: {
       height: 36,
@@ -154,7 +155,7 @@ export default function EditCellsScreen({ navigation }: EditCellsProps) {
       lineHeight: 18,
       textAlign: 'center',
       fontFamily: Fonts.Inter_300Light,
-      color: colorsStyle.buttons,
+      color: colors.screen.text,
       textDecorationLine: 'underline',
     },
   });
@@ -186,7 +187,7 @@ export default function EditCellsScreen({ navigation }: EditCellsProps) {
             <Pressable style={styles.pressable} onPress={onPressStandard}>
               <MaterialCommunityIcons
                 name="restore"
-                color={colorsStyle.buttons}
+                color={colors.screen.editCells.icon}
                 size={18}
               />
               <Text style={styles.pressableText}>{editCells.standard}</Text>

@@ -16,7 +16,6 @@ import * as Print from 'expo-print';
 
 import { language } from '../languages';
 import { RootStackParamList } from '../routes/types.route';
-import colorsStyle from '../styles/colors.style';
 import Header from '../components/Header.component';
 import { useAppDispatch, useAppSelector } from '../redux';
 import Footer from '../components/Footer.component';
@@ -37,6 +36,7 @@ import {
 } from '../redux/reducers/shareOptionsReducer';
 import constantsUtils from '../utils/constants.utils';
 import { setUserReviewed } from '../redux/reducers/userReducer';
+import { useColors } from '../hooks/useColors';
 
 type ReportNavigationProp = StackNavigationProp<RootStackParamList, 'Report'>;
 type ReportRouteProp = RouteProp<RootStackParamList, 'Report'>;
@@ -49,6 +49,7 @@ export default function CountScreen({ navigation, route }: ReportProps) {
 
   const dispatch = useAppDispatch();
   const { reviewed } = useAppSelector((state) => state.user);
+  const colors = useColors();
 
   const printRef = useRef(null);
 
@@ -253,7 +254,7 @@ export default function CountScreen({ navigation, route }: ReportProps) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
     },
     headerSpace: {
       marginTop: 20,
@@ -323,7 +324,7 @@ export default function CountScreen({ navigation, route }: ReportProps) {
     },
     footerRowContainer: {
       paddingTop: 16,
-      borderTopColor: colorsStyle.absolutes.black,
+      borderTopColor: colors.screen.text,
       borderTopWidth: 1,
       flexDirection: 'row',
       alignItems: 'center',
@@ -334,10 +335,10 @@ export default function CountScreen({ navigation, route }: ReportProps) {
       lineHeight: 16,
       textAlign: 'left',
       fontFamily: Fonts.Inter_700Bold,
-      color: colorsStyle.greys[2],
+      color: colors.screen.report.footerText,
     },
     printView: {
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
     },
   });
 

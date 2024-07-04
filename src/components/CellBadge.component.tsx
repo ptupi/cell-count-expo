@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import Text, { Fonts } from './Text.component';
-import colorsStyle from '../styles/colors.style';
+import { useColors } from '../hooks/useColors';
 
 export type CellBadgeProps = {
   label: string;
@@ -10,6 +10,8 @@ export type CellBadgeProps = {
 
 const CellBadge = (props: CellBadgeProps) => {
   const { label } = props;
+
+  const colors = useColors();
 
   const styles = StyleSheet.create({
     container: {
@@ -19,19 +21,19 @@ const CellBadge = (props: CellBadgeProps) => {
       minWidth: 32,
       height: 24,
       borderRadius: 12,
-      borderColor: colorsStyle.absolutes.red,
-      backgroundColor: colorsStyle.absolutes.white,
+      borderColor: colors.component.cellBadge.border,
+      backgroundColor: colors.component.cellBadge.background,
       justifyContent: 'center',
       alignItems: 'center',
       borderWidth: 1,
       paddingHorizontal: 8,
     },
     text: {
-      fontFamily: Fonts.Inter_300Light,
+      fontFamily: Fonts.Inter_700Bold,
       fontSize: 16,
       lineHeight: 20,
       textAlign: 'center',
-      color: colorsStyle.absolutes.red,
+      color: colors.component.cellBadge.text,
     },
   });
 

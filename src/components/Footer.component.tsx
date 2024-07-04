@@ -1,18 +1,20 @@
 import React from 'react';
 import { View, StyleSheet, ViewProps } from 'react-native';
 
-import colorsStyle from '../styles/colors.style';
+import { useColors } from '../hooks/useColors';
 
 const Footer = (props: ViewProps) => {
   const { children } = props;
 
+  const colors = useColors();
+
   const styles = StyleSheet.create({
     container: {
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
       padding: 16,
       paddingBottom: 32,
       borderTopWidth: 1,
-      borderTopColor: colorsStyle.opacity.black5,
+      borderTopColor: colors.component.footer.borderTop,
     },
   });
 

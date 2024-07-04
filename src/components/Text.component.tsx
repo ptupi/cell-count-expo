@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text as TextReactNative,
-  TextProps,
-} from 'react-native';
+import { StyleSheet, Text as TextReactNative, TextProps } from 'react-native';
 
-import colorsStyle from '../styles/colors.style';
+import { useColors } from '../hooks/useColors';
 
 export enum Fonts {
   Inter_100Thin = 'Inter_100Thin',
@@ -21,10 +16,12 @@ export enum Fonts {
 }
 
 const Text = (props: TextProps) => {
+  const colors = useColors();
+
   const styles = StyleSheet.create({
     text: {
       fontSize: 12,
-      color: colorsStyle.absolutes.black,
+      color: colors.screen.text,
       textAlign: 'center',
       fontFamily: 'Inter_400Regular',
     },

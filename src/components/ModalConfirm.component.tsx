@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Modal } from 'react-native';
 
-import colorsStyle from '../styles/colors.style';
 import Pressable from './Pressable.component';
 import Text, { Fonts } from './Text.component';
+import { useColors } from '../hooks/useColors';
 
 interface ModalConfirmProps {
   visible: boolean;
@@ -15,6 +15,8 @@ interface ModalConfirmProps {
 
 function ModalConfirm(props: ModalConfirmProps) {
   const { visible, setVisible, title, message, handleConfirm } = props;
+
+  const colors = useColors();
 
   const handleClose = () => {
     setVisible(false);
@@ -38,18 +40,18 @@ function ModalConfirm(props: ModalConfirmProps) {
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: colorsStyle.opacity.black50,
+      backgroundColor: colors.screen.overlay,
     },
     center: {
       width: '90%',
       maxWidth: 340,
       minHeight: 216,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
       borderRadius: 8,
       padding: 16,
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
-      shadowColor: colorsStyle.absolutes.black,
+      shadowColor: colors.screen.shadow,
       shadowOffset: { width: -2, height: 4 },
       shadowOpacity: 0.2,
       shadowRadius: 3,
@@ -82,7 +84,7 @@ function ModalConfirm(props: ModalConfirmProps) {
     button: {
       flex: 1,
       height: 56,
-      backgroundColor: colorsStyle.buttons,
+      backgroundColor: colors.component.button.primary.active,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 8,
@@ -93,17 +95,17 @@ function ModalConfirm(props: ModalConfirmProps) {
       lineHeight: 20,
       textAlign: 'center',
       fontFamily: Fonts.Inter_700Bold,
-      color: colorsStyle.absolutes.white,
+      color: colors.component.button.primary.text,
     },
     buttonConfirm: {
       flex: 1,
       height: 56,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.component.button.secondary.active,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 8,
       borderWidth: 1,
-      borderColor: colorsStyle.buttons,
+      borderColor: colors.component.button.secondary.text,
       marginLeft: 8,
     },
     buttonConfirmText: {
@@ -111,7 +113,7 @@ function ModalConfirm(props: ModalConfirmProps) {
       lineHeight: 20,
       textAlign: 'center',
       fontFamily: Fonts.Inter_700Bold,
-      color: colorsStyle.buttons,
+      color: colors.component.button.secondary.text,
     },
   });
 

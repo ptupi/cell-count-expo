@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Pressable from './Pressable.component';
 import Text, { Fonts } from './Text.component';
 import { language } from '../languages';
-import colorsStyle from '../styles/colors.style';
+import { useColors } from '../hooks/useColors';
 
 interface ModalShareOptionsProps {
   visible: boolean;
@@ -27,6 +27,8 @@ function ModalShareOptions(props: ModalShareOptionsProps) {
     handlePdf,
     handleExcel,
   } = props;
+
+  const colors = useColors();
 
   const handleClose = () => {
     setVisible(false);
@@ -65,17 +67,17 @@ function ModalShareOptions(props: ModalShareOptionsProps) {
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: colorsStyle.opacity.black50,
+      backgroundColor: colors.screen.overlay,
     },
     center: {
       width: '90%',
       maxWidth: 340,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
       borderRadius: 8,
       padding: 16,
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
-      shadowColor: colorsStyle.absolutes.black,
+      shadowColor: colors.screen.shadow,
       shadowOffset: { width: -2, height: 4 },
       shadowOpacity: 0.2,
       shadowRadius: 3,
@@ -121,7 +123,7 @@ function ModalShareOptions(props: ModalShareOptionsProps) {
             <MaterialCommunityIcons
               name="share"
               size={24}
-              color={colorsStyle.icons}
+              color={colors.component.modalShare.icon}
             />
             <View style={styles.optionTextContainer}>
               <Text style={styles.optionText}>{shareOptions.app}</Text>
@@ -134,7 +136,7 @@ function ModalShareOptions(props: ModalShareOptionsProps) {
             <MaterialCommunityIcons
               name="image-outline"
               size={24}
-              color={colorsStyle.icons}
+              color={colors.component.modalShare.icon}
             />
             <View style={styles.optionTextContainer}>
               <Text style={styles.optionText}>{shareOptions.image}</Text>
@@ -147,7 +149,7 @@ function ModalShareOptions(props: ModalShareOptionsProps) {
             <MaterialCommunityIcons
               name="file-pdf-box"
               size={24}
-              color={colorsStyle.icons}
+              color={colors.component.modalShare.icon}
             />
             <View style={styles.optionTextContainer}>
               <Text style={styles.optionText}>{shareOptions.pdf}</Text>
@@ -160,7 +162,7 @@ function ModalShareOptions(props: ModalShareOptionsProps) {
             <MaterialCommunityIcons
               name="file-excel-box"
               size={24}
-              color={colorsStyle.icons}
+              color={colors.component.modalShare.icon}
             />
             <View style={styles.optionTextContainer}>
               <Text style={styles.optionText}>{shareOptions.excel}</Text>

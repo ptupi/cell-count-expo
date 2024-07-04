@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Modal } from 'react-native';
 
-import colorsStyle from '../styles/colors.style';
 import Pressable from './Pressable.component';
 import Text, { Fonts } from './Text.component';
+import { useColors } from '../hooks/useColors';
 
 interface ModalAlertProps {
   visible: boolean;
@@ -14,6 +14,8 @@ interface ModalAlertProps {
 
 function ModalAlert(props: ModalAlertProps) {
   const { visible, setVisible, title, message } = props;
+
+  const colors = useColors();
 
   const handleClose = () => {
     setVisible(false);
@@ -32,18 +34,18 @@ function ModalAlert(props: ModalAlertProps) {
       left: 0,
       width: '100%',
       height: '100%',
-      backgroundColor: colorsStyle.opacity.black50,
+      backgroundColor: colors.screen.overlay,
     },
     center: {
       width: '90%',
       maxWidth: 340,
       minHeight: 216,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
       borderRadius: 8,
       padding: 16,
       justifyContent: 'flex-start',
       alignItems: 'flex-start',
-      shadowColor: colorsStyle.absolutes.black,
+      shadowColor: colors.screen.shadow,
       shadowOffset: { width: -2, height: 4 },
       shadowOpacity: 0.2,
       shadowRadius: 3,
@@ -70,7 +72,7 @@ function ModalAlert(props: ModalAlertProps) {
     button: {
       width: '100%',
       height: 56,
-      backgroundColor: colorsStyle.buttons,
+      backgroundColor: colors.component.button.primary.active,
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: 8,
@@ -81,7 +83,7 @@ function ModalAlert(props: ModalAlertProps) {
       lineHeight: 20,
       textAlign: 'center',
       fontFamily: Fonts.Inter_700Bold,
-      color: colorsStyle.absolutes.white,
+      color: colors.component.button.primary.text,
     },
   });
 

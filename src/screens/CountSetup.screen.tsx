@@ -11,7 +11,6 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { language } from '../languages';
 import { RootStackParamList } from '../routes/types.route';
-import colorsStyle from '../styles/colors.style';
 import Header from '../components/Header.component';
 import Text, { Fonts } from '../components/Text.component';
 import Picker, { PickerOption } from '../components/Picker.component';
@@ -19,6 +18,7 @@ import Footer from '../components/Footer.component';
 import Button from '../components/Button.component';
 import TextInput from '../components/TextInput.component';
 import { maskOnlyNumbers } from '../utils/masks.utils';
+import { useColors } from '../hooks/useColors';
 
 type CountSetupNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -87,6 +87,8 @@ export default function CountSetupScreen({ navigation }: CountSetupProps) {
 
   const { countSetup } = language;
 
+  const colors = useColors();
+
   const [maxCountVisible, setMaxCountVisible] = useState(false);
   const [maxCount, setMaxCount] = useState(null as PickerOption);
   const [leu, setLeu] = useState(null as string);
@@ -125,7 +127,7 @@ export default function CountSetupScreen({ navigation }: CountSetupProps) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
     },
     desc: {
       marginTop: 16,

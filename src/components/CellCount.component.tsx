@@ -3,8 +3,8 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 
 import Text, { Fonts } from './Text.component';
 import CellBadge from './CellBadge.component';
-import colorsStyle from '../styles/colors.style';
 import { Cell } from '../redux/reducers/userReducer';
+import { useColors } from '../hooks/useColors';
 
 export type CellCountProps = {
   cell: Cell;
@@ -16,6 +16,8 @@ export type CellCountProps = {
 const CellCount = (props: CellCountProps) => {
   const { cell, onPress, disabled, currentCount } = props;
 
+  const colors = useColors();
+
   const cellCount = currentCount.filter(
     (item) => item.name === cell.name && item.tag === cell.tag
   ).length;
@@ -26,25 +28,25 @@ const CellCount = (props: CellCountProps) => {
       width: 58,
       height: 58,
       borderRadius: 29,
-      backgroundColor: colorsStyle.absolutes.black,
+      backgroundColor: colors.screen.text,
       justifyContent: 'center',
       alignItems: 'center',
     },
     cellDisabled: {
-      backgroundColor: colorsStyle.greys[3],
+      backgroundColor: colors.component.button.primary.disabled,
     },
     erit: {
-      backgroundColor: colorsStyle.buttons,
+      backgroundColor: colors.component.cellCount.erit,
     },
     tag: {
       fontFamily: Fonts.Inter_700Bold,
       fontSize: 16,
       lineHeight: 20,
       textAlign: 'center',
-      color: colorsStyle.absolutes.white,
+      color: colors.component.cellCount.text,
     },
     tagDisabled: {
-      color: colorsStyle.greys[2],
+      color: colors.component.button.primary.disabledText,
     },
   });
 

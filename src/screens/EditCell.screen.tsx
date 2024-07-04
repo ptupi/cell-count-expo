@@ -10,7 +10,6 @@ import { RouteProp, useFocusEffect } from '@react-navigation/native';
 
 import { language } from '../languages';
 import { RootStackParamList } from '../routes/types.route';
-import colorsStyle from '../styles/colors.style';
 import Header from '../components/Header.component';
 import { Cell, setCustomCellList } from '../redux/reducers/userReducer';
 import Text, { Fonts } from '../components/Text.component';
@@ -19,6 +18,7 @@ import Button from '../components/Button.component';
 import TextInput from '../components/TextInput.component';
 import { isEmptyString } from '../utils/validator.utils';
 import { useAppDispatch } from '../redux';
+import { useColors } from '../hooks/useColors';
 
 type EditCellNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -35,6 +35,7 @@ export default function EditCellScreen({ navigation, route }: EditCellProps) {
   const { cell, cellList } = route.params;
 
   const dispatch = useAppDispatch();
+  const colors = useColors();
 
   const [order, setOrder] = useState(cell.order);
   const [name, setName] = useState(cell.name);
@@ -90,7 +91,7 @@ export default function EditCellScreen({ navigation, route }: EditCellProps) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
     },
     desc: {
       marginTop: 16,

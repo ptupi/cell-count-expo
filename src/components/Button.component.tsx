@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import colorsStyle from '../styles/colors.style';
 import Pressable from './Pressable.component';
 import Text, { Fonts } from './Text.component';
+import { useColors } from '../hooks/useColors';
 
 export type ButtonProps = {
   title: string;
@@ -16,6 +16,8 @@ export type ButtonProps = {
 const Button = (props: ButtonProps) => {
   const { title, onPress, icon, disabled } = props;
 
+  const colors = useColors();
+
   const styles = StyleSheet.create({
     pressable: {
       width: '100%',
@@ -23,7 +25,9 @@ const Button = (props: ButtonProps) => {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: disabled ? colorsStyle.greys[3] : colorsStyle.buttons,
+      backgroundColor: disabled
+        ? colors.component.button.primary.disabled
+        : colors.component.button.primary.active,
       borderRadius: 8,
     },
     pressableText: {
@@ -32,7 +36,9 @@ const Button = (props: ButtonProps) => {
       lineHeight: 20,
       textAlign: 'center',
       fontFamily: Fonts.Inter_700Bold,
-      color: disabled ? colorsStyle.greys[2] : colorsStyle.absolutes.white,
+      color: disabled
+        ? colors.component.button.primary.disabledText
+        : colors.component.button.primary.text,
     },
   });
 
@@ -41,7 +47,11 @@ const Button = (props: ButtonProps) => {
       {icon != null && (
         <MaterialIcons
           name={icon}
-          color={disabled ? colorsStyle.greys[2] : colorsStyle.absolutes.white}
+          color={
+            disabled
+              ? colors.component.button.primary.disabledText
+              : colors.component.button.primary.text
+          }
           size={24}
         />
       )}

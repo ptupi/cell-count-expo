@@ -4,6 +4,7 @@ import {
   FlatList,
   Platform,
   StyleSheet,
+  useColorScheme,
   View,
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -12,19 +13,19 @@ import * as Linking from 'expo-linking';
 
 import { language } from '../languages';
 import { RootStackParamList } from '../routes/types.route';
-import colorsStyle from '../styles/colors.style';
 import Header from '../components/Header.component';
 import SettingsOption, {
   SettingsOptionProps,
 } from '../components/SettingsOption.component';
 import constantsUtils from '../utils/constants.utils';
-import { useAppDispatch } from '../redux';
+import { useAppDispatch, useAppSelector } from '../redux';
 import {
   setAlertMessage,
   setAlertTitle,
   setAlertVisible,
 } from '../redux/reducers/alertReducer';
 import { setUserReviewed } from '../redux/reducers/userReducer';
+import { useColors } from '../hooks/useColors';
 
 type SettingsNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -36,6 +37,8 @@ export default function SettingsScreen({ navigation }: SettingsProps) {
   const { settings } = language;
 
   const dispatch = useAppDispatch();
+  const colorScheme = useColorScheme();
+  const colors = useColors();
 
   const onPressEditCells = async () => {
     navigation.navigate('EditCells');
@@ -105,13 +108,17 @@ export default function SettingsScreen({ navigation }: SettingsProps) {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
     },
   });
 
   return (
     <View style={styles.container}>
-      <Header title={settings.title} onPressBack={goBack} />
+      <Header
+        title={settings.title}
+        onPressBack={goBack}
+        icon={colorScheme === 'dark' ? 'mode-night' : 'light-mode'}
+      />
       <FlatList
         data={OPTIONS}
         renderItem={({ item, index }) => (

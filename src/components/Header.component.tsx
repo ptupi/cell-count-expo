@@ -2,10 +2,10 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import colorsStyle from '../styles/colors.style';
 import Pressable from './Pressable.component';
 import Text, { Fonts } from './Text.component';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useColors } from '../hooks/useColors';
 
 export type HeaderProps = {
   title: string;
@@ -15,7 +15,9 @@ export type HeaderProps = {
 };
 
 const Header = (props: HeaderProps) => {
-  const { title, onPressBack, icon, onPressIcon } = props;
+  const { title, onPressBack, icon, onPressIcon = () => {} } = props;
+
+  const colors = useColors();
 
   const styles = StyleSheet.create({
     container: {
@@ -33,14 +35,6 @@ const Header = (props: HeaderProps) => {
       justifyContent: 'center',
       alignItems: 'center',
     },
-    rightIconContainer: {
-      height: 36,
-      width: 36,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 18,
-      backgroundColor: colorsStyle.opacity.red25,
-    },
     textContainer: {
       flex: 1,
       justifyContent: 'center',
@@ -51,7 +45,7 @@ const Header = (props: HeaderProps) => {
       lineHeight: 24,
       textAlign: 'center',
       fontFamily: Fonts.Inter_700Bold,
-      color: colorsStyle.icons,
+      color: colors.component.header.title,
     },
     headerGradient: {
       height: 4,
@@ -65,7 +59,7 @@ const Header = (props: HeaderProps) => {
         <Pressable style={styles.iconContainer} onPress={onPressBack}>
           <MaterialIcons
             name="chevron-left"
-            color={colorsStyle.icons}
+            color={colors.component.header.icon}
             size={32}
           />
         </Pressable>
@@ -73,10 +67,10 @@ const Header = (props: HeaderProps) => {
           <Text style={styles.text}>{title}</Text>
         </View>
         {icon != null ? (
-          <Pressable style={styles.rightIconContainer} onPress={onPressIcon}>
+          <Pressable style={styles.iconContainer} onPress={onPressIcon}>
             <MaterialIcons
               name={icon}
-              color={colorsStyle.absolutes.black}
+              color={colors.component.header.icon}
               size={24}
             />
           </Pressable>
@@ -85,7 +79,10 @@ const Header = (props: HeaderProps) => {
         )}
       </View>
       <LinearGradient
-        colors={[colorsStyle.absolutes.white, colorsStyle.absolutes.red]}
+        colors={[
+          colors.component.gradient.gradientStart,
+          colors.component.gradient.gradientEnd,
+        ]}
         style={styles.headerGradient}
         start={{ x: 0.0, y: 0.0 }}
         end={{ x: 1.0, y: 1.0 }}

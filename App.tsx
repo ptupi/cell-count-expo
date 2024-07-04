@@ -4,7 +4,6 @@ import { StatusBar } from 'expo-status-bar';
 import {
   View,
   StyleSheet,
-  Platform,
   StatusBar as StatusBarReactNative,
 } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -20,13 +19,12 @@ import {
   Inter_800ExtraBold,
   Inter_900Black,
 } from '@expo-google-fonts/inter';
-// import { Asset } from 'expo-asset';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import colorsStyle from './src/styles/colors.style';
 import Navigation from './src/routes';
 import { store, persistor } from './src/redux';
+import { useColors } from './src/hooks/useColors';
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -40,20 +38,12 @@ export default function App() {
     Inter_800ExtraBold,
     Inter_900Black,
   });
+  const colors = useColors();
 
   let [appReady, setAppReady] = useState(false);
 
-  let cacheResources = () => {
-    // const images = [require('./src/assets/png/houseMarker.asset.png')];
-    // const cacheImages = images.map((image) => {
-    //   return Asset.fromModule(image).downloadAsync();
-    // });
-    // return Promise.all(cacheImages);
-  };
-
   useEffect(() => {
     const loadResources = async () => {
-      // await cacheResources();
       if (fontsLoaded) {
         setAppReady(true);
       }
@@ -64,19 +54,12 @@ export default function App() {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colorsStyle.absolutes.white,
-    },
-    containerIos: {
-      height: 44,
-      width: '100%',
-      backgroundColor: colorsStyle.absolutes.white,
-    },
-    containerAndroid: {
+      backgroundColor: colors.screen.background,
       marginTop: StatusBarReactNative.currentHeight,
     },
     splashContainer: {
       flex: 1,
-      backgroundColor: colorsStyle.absolutes.white,
+      backgroundColor: colors.screen.background,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -86,19 +69,9 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <SafeAreaProvider>
-          <StatusBar
-            style="dark"
-            backgroundColor={colorsStyle.absolutes.white}
-          />
+          <StatusBar style="auto" backgroundColor={colors.screen.background} />
           {appReady ? (
-            <View
-              style={[
-                styles.container,
-                Platform.OS === 'ios'
-                  ? styles.containerIos
-                  : styles.containerAndroid,
-              ]}
-            >
+            <View style={styles.container}>
               <Navigation />
             </View>
           ) : (
