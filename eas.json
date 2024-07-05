@@ -5,11 +5,7 @@
   "build": {
     "production": {
       "android": {
-        "autoIncrement": "versionCode",
         "buildType": "app-bundle"
-      },
-      "ios": {
-        "autoIncrement": "buildNumber"
       }
     },
     "preview": {
