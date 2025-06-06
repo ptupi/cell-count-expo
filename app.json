@@ -3,7 +3,7 @@
     "name": "Contador Celular Multi Espécie",
     "slug": "cell-count-expo",
     "owner": "ptupi",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -16,9 +16,7 @@
       "fallbackToCacheTimeout": 0,
       "url": "https://u.expo.dev/153b3c1a-1598-4f62-aacb-f42a87b4864e"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mappe.cellcount",
@@ -27,7 +25,7 @@
     },
     "android": {
       "package": "com.mappe.cellcount",
-      "versionCode": 12,
+      "versionCode": 13,
       "allowBackup": false
     },
     "androidStatusBar": {
@@ -46,8 +44,6 @@
     "runtimeVersion": {
       "policy": "sdkVersion"
     },
-    "plugins": [
-      "expo-asset"
-    ]
+    "plugins": ["expo-asset"]
   }
 }
